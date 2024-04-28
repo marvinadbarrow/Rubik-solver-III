@@ -1,0 +1,107 @@
+cubieCoordinates.forEach(obj =>{
+  let array, stringCoords;
+  if(obj['type'] == 'corners down'){
+     stringCoords = obj['coordinates'].join('').toString()
+    switch(stringCoords){
+  case '-1-1-1': array = downLayerCorners[0]
+  obj['facets'] = [array[2], array[0], array[1]]
+  break;
+  case '-1-11': array = downLayerCorners[1]
+  obj['facets'] = [array[2], array[0], array[1]]
+    break
+    case '1-11': array = downLayerCorners[2]
+    obj['facets'] = [array[2], array[0], array[1]]
+      break
+      case '1-1-1': array = downLayerCorners[3]
+      obj['facets'] = [array[2], array[0], array[1]]
+        break;
+    }
+  }else if(obj['type'] == 'corners up'){
+    stringCoords = obj['coordinates'].join('').toString()
+    switch(stringCoords){
+  case '-11-1': array = upLayerCorners[0]
+  obj['facets'] = [array[2], array[0], array[1]]
+  break;
+  case '-111': array = upLayerCorners[1]
+  obj['facets'] = [array[2], array[0], array[1]]
+    break
+    case '111': array = upLayerCorners[2]
+    obj['facets'] = [array[2], array[0], array[1]]
+      break
+      case '11-1': array = upLayerCorners[3]
+      obj['facets'] = [array[2], array[0], array[1]]
+        break;
+    }
+    
+  }else if(obj['type'] == 'edges down'){
+    stringCoords = obj['coordinates'].join('').toString()
+    switch(stringCoords){
+  case '0-1-1': array = downLayerEdges[0]
+  obj['facets'] = ['bl', array[0], array[1]]
+  break;
+  case '-1-10': array = downLayerEdges[1]
+  obj['facets'] = [array[1], array[0], 'bl']
+    break
+    case '0-11': array = downLayerEdges[2]
+    obj['facets'] = ['bl', array[0], array[1]]
+      break
+      case '1-10': array = downLayerEdges[3]
+      obj['facets'] = [array[1], array[0], 'bl']
+        break;
+    }
+    
+  }else if(obj['type'] == 'edges up'){
+    stringCoords = obj['coordinates'].join('').toString()
+    switch(stringCoords){
+  case '01-1': array = upLayerEdges[0]
+  obj['facets'] = ['bl', array[0], array[1]]
+  break;
+  case '-110': array = upLayerEdges[1]
+  obj['facets'] = [array[1], array[0], 'bl']
+    break
+    case '011': array = upLayerEdges[2]
+    obj['facets'] = ['bl', array[0], array[1]]
+      break
+      case '110': array = upLayerEdges[3]
+      obj['facets'] = [array[1], array[0], 'bl']
+        break;
+    }
+    
+  }else if(obj['type'] == 'edges mid'){
+    stringCoords = obj['coordinates'].join('').toString()
+    switch(stringCoords){
+  case '-10-1': array = midLayerEdges[0]
+  obj['facets'] = [array[1] ,'bl', array[0]]
+  break;
+  case '-101': array = midLayerEdges[1]
+  obj['facets'] = [array[1] ,'bl', array[0]]
+    break
+    case '101': array = midLayerEdges[2]
+    obj['facets'] = [array[1] ,'bl', array[0]]
+      break
+      case '10-1': array = midLayerEdges[3]
+      obj['facets'] = [array[1] ,'bl', array[0]]
+        break;
+    }
+    
+  }else if(obj['type'] == 'center'){
+    stringCoords = obj['coordinates'].join('').toString()
+    console.log(stringCoords)
+  switch(stringCoords){
+  case '00-1': obj['facets'] = ['bl', 'bl', 'r']
+  break;
+  case '-100': obj['facets'] = ['g', 'bl', 'bl']
+break
+case '001': obj['facets'] = ['bl', 'bl', 'o']
+break
+case '100':obj['facets'] = ['b', 'bl', 'bl']
+break;
+case '0-10': obj['facets'] = ['bl', 'w', 'bl']
+break;
+case '010':obj['facets'] = ['bl', 'y', 'bl']
+break;
+case '000':obj['facets'] = ['bl', 'bl', 'bl']
+break;
+    }
+  }
+})

@@ -1,0 +1,42 @@
+ if(notOrientedCrossPieceArray.length > 0){
+      // there must be just 'one' element in the array (because three are oriented and hence in the oriented array), representing an incorrectly oriented cross piece on the down layer. The below array will hold current index and permuted index for all four cross edge-pieces. 
+  
+      // create the new array which holds all of the objects representing edge pieces (cross pieces or not) on the down array
+      let downLayerAllEdgesArr = [...orientedCrossEdgeArray, ...notOrientedCrossPieceArray]
+
+      let algoArray = []
+      downLayerAllEdgesArr.forEach(edgePiece =>{
+        // variable for non-white facet of cross edge-piece
+      let colorFacet;
+
+      let pieceIndex; 
+        // variable for the index at which the piece naturally sits in the down layer
+    let naturalIndex; 
+        if(edgePiece['oriented'] === false){ // get the index in layer
+          pieceIndex = notOrientedCrossPieceArray[0]['index_in_layer']
+          // swich the index and then do the three rotations required to place the piece correctly, and then just run the permute four pieces function. 
+
+          switch(pieceIndex){
+            case 0:
+            algoArray = [B, DP, R, D]
+              break;
+              case 1: // white facet is on left face
+            algoArray = [L, DP, B, D]
+                break;
+                case 2: // white facet is on front face
+              algoArray = [F, DP, L, D]
+                  break;
+                  case 3: // otherwise white facet is on right face
+                algoArray = [R, DP, F, D]
+          break;
+          default:
+            }
+        }
+      })
+      
+      executionAndChecks(algoArray, 'FL_check')
+
+R2, U, B2, F', R2, B', F', D, B',D
+
+
+    }

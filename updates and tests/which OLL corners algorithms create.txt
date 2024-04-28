@@ -1,0 +1,94 @@
+scramble 
+6a dragster
+6b spider
+6c beetle
+
+10a dragster
+10b spider
+10c sune
+
+15a dragster
+15b buggy
+15c superman
+
+
+const OLLEdgeObject = {
+0:[...noEdgesOLLAlgo],
+1:vEdgesOLLAlgo, 
+2:[U, ...iEdgesOLLAlgo],
+3:[[U, ...vEdgesOLLAlgo], [UP, ...vEdgesOLLAlgo]], 
+4:iEdgesOLLAlgo, 
+5:[U2, ...vEdgesOLLAlgo], 
+6: confirmOLLEdges()
+}
+
+
+
+
+function assessOLLEdges(){
+  let tempAlgo, orientedIndexes = [], sumOfIndexes, tempString;
+upLayerEdges.forEach((edge, i) =>{edge[0] == 'y'? orientedIndexes.push(i):console.log('')})
+ //if at least two oriented edges (1 edge is impossible after F2L stage)
+tempString = orientedIndexes.join('').toString()
+orientedIndexes.length > 0?sumOfIndexes = orientedIndexes.reduce((a,b) => a + b):sumOfIndexes = 0
+sumOfIndexes !==3?tempAlgo = OLLEdgeObject[sumOfIndexes]:tempString == '12'?
+tempAlgo = OLLEdgeObject[sumOfIndexes][0]:tempAlgo = OLLEdgeObject[sumOfIndexes][1]
+
+algorithmExecution(tempAlgo)
+setTimeout(() => {
+confirmOLLEdges()
+}, (tempAlgo.length + 1)*rotationDelay);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function assessOLLEdges(){
+  let tempAlgo, orientedIndexes = [], sumOfIndexes, tempString;
+upLayerEdges.forEach((edge, i) =>{edge[0] == 'y'? orientedIndexes.push(i):console.log('')})
+// if any edges are oriented
+if(orientedIndexes.length > 0){//if at least two oriented edges (1 edge is impossible after F2L stage)
+  sumOfIndexes = orientedIndexes.reduce((a,b) => a + b)
+tempString = orientedIndexes.join('').toString()
+switch(sumOfIndexes){
+case 1: tempAlgo = vEdgesOLLAlgo // indexes 0&1
+break;
+case 2: tempAlgo = [U, ...iEdgesOLLAlgo]  // indexes 0&2
+  break;
+  case 3: // indexes 1&2 or 0&3
+  tempString == '12'? tempAlgo = [U, ...vEdgesOLLAlgo]: tempAlgo = [UP, ...vEdgesOLLAlgo]
+  break;
+  case 4: tempAlgo = iEdgesOLLAlgo // indexes 1&3
+    break;
+    case 5: tempAlgo = [U2, ...vEdgesOLLAlgo]// indexes 2&3
+    break;
+    default: confirmOLLEdges() //sum of 0 t0 3 inclusive is 6, all edges solved
+} 
+}else{tempAlgo = [...noEdgesOLLAlgo]// no edges oriented
+}
+algorithmExecution(tempAlgo)
+setTimeout(() => {
+confirmOLLEdges()
+}, (tempAlgo.length + 1)*rotationDelay);
+}

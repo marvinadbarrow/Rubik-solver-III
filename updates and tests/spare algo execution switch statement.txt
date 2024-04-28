@@ -1,0 +1,77 @@
+case 'L':
+  rotationName = 'left rotate'
+  leftRotate('l-btn')
+break;
+case 'R':
+  rotationName = 'right rotate'
+  rightRotate('r-btn')
+break;
+case 'U':
+  rotationName = 'up rotate'
+  upRotate('u-btn')
+break;
+case 'D':
+  rotationName = 'down rotate'
+  downRotate('d-btn')
+break;
+case 'F':
+  rotationName = 'front rotate'
+  frontRotate('f-btn')
+break;     
+case 'B':
+  rotationName = 'back rotate'
+  backRotate('b-btn')
+break;
+case 'L`':
+  rotationName = 'left prime rotate'
+  leftRotate('l-prime-btn')
+break;
+case 'R`':
+  rotationName = 'right prime rotate'
+  rightRotate('r-prime-btn')
+break;
+case 'U`':
+  rotationName = 'up prime rotate'
+  upRotate('u-prime-btn')
+break;
+case 'D`':
+  rotationName = 'down prime rotate'
+  downRotate('d-prime-btn')
+break;
+case 'F`':
+  rotationName = 'front prime rotate'
+  frontRotate('f-prime-btn')
+break;     
+case 'B`':
+  rotationName = 'back prime rotate'
+  backRotate('b-prime-btn')
+break;
+case 'L2':
+  rotationName = 'left double rotate'
+  leftRotate('l2-btnless', 'double')
+break;
+case 'R2':
+  rotationName = 'right double rotate'
+  rightRotate('r2-btnless', 'double')
+break;
+case 'U2':
+  rotationName = 'up double rotate'
+  upRotate('u2-btnless', 'double')
+break;
+case 'D2':
+  rotationName = 'down double rotate'
+  downRotate('d2-btnless', 'double')
+break;
+case 'F2':
+  rotationName = 'front double rotate'
+  frontRotate('f2-btnless', 'double')
+break;     
+case 'B2':
+  rotationName = 'back double rotate'
+  backRotate('b2-btnless', 'double')
+break;
+case 'N/A':
+case 'next':
+  console.log('null move')
+  rotationName = 'no rotation'
+    }

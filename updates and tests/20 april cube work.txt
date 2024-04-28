@@ -1,0 +1,28 @@
+  let algo = pairJoinAlgorithm(edgeIndex, '13')
+let middleMoves = pairJoinAlgorithm(edgeIndex, '12')
+
+// below object is used in check cross down layer to get a child cross piece's distance from master cross piece; but it can also be used for last  layer cross piece cases too so this will remove 20 lines of code from the last layer cross piece function
+
+const masterColorObj = {
+'o':{
+  'g':3,
+  'r':2,
+  'b':1,
+}, 
+'b':{
+  'o':3,
+  'g':2,
+  'r':1,
+}, 
+'r':{
+  'b':3,
+  'o':2,
+  'g':1,
+}, 
+'g':{
+  'r':3,
+  'b':2,
+  'o':1,
+}, 
+}
+

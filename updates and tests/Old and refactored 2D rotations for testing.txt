@@ -1,0 +1,1353 @@
+OLD RENDER: 
+
+const renderCube = (cube, update, double, doubleFace) =>{
+// console.log(cube)
+// facetMainArr
+// console.log(cube)
+
+  const runRender = (newConfig) =>{
+
+    // on the cube matrix array for each subarray (representing one layer of the cube)
+cube.forEach((face, faceIndex) =>{
+  // loop through the layer elements
+  face.forEach((layer, indexOfLayer) =>{
+
+
+
+    layer.forEach((facet, indexOfFacet) =>{
+      
+  // create a div for each element (which represents a facet on the layer)
+  let facetElement = document.createElement('div')
+  // create an appropriate classname for the facet, the string on the current position
+  let facetClass = 'facet-' + facetsNames[indexOfLayer][indexOfFacet]
+  let centerFacetClass = 'facet-' + facetsNames[indexOfLayer][indexOfFacet] + ' center_facet'
+
+  
+if(indexOfLayer === 1 && indexOfFacet === 1){
+  // add center facet's classname to the div
+  facetElement.setAttribute('class', centerFacetClass)
+}else{
+  // add facet's classname to the div
+  facetElement.setAttribute('class', facetClass)
+}
+
+  
+      // get colour character from cube matrix array which corresponds to face array
+      faceColour = facet
+  
+      switch(faceColour){ // switch colour character and assign colour associated with character
+        case 'g': colourName = 'green'
+        break;
+        case 'o': colourName = 'orange'
+        break;
+        case 'b': colourName = 'blue'
+        break;
+        case 'r': colourName = 'red'
+        break;
+        case 'y': colourName = 'yellow'
+        break;
+        case 'w': colourName = 'white'
+        break;
+        case 'bl': colourName = 'black' // T is for transparent, which is used for the configuration. 
+          }
+  
+     // style the facet and add face colour
+     facetElement.style.cssText = `width:50px; height:50px;  border:1px solid black; border-radius:5px; background-color:${colourName}`
+
+
+     // push facet to face array, unless a new configuration exists then push to the empty array
+if(newConfig){
+
+  // first the original facets need removal
+  faceElements.forEach(oldFace =>{
+    while (oldFace.firstChild) {
+      oldFace.removeChild(oldFace.firstChild)
+    }
+    
+       })
+    
+  newConfig[faceIndex].push(facetElement)
+  // on each face element
+  faceElements.forEach((face, indexOfFace) =>{
+    // find the corresponding group of facets
+    newConfig[indexOfFace].forEach((facetMember, indexOfMember) =>{
+
+      // append each facet to the face
+      face.append(facetMember)
+    })
+    
+  })
+
+// replace original cube with new configuration
+  cubeMatrixAlt = [...cube]
+
+  // arrays recording edge pice positions
+  upLayerEdges = [
+    [cubeMatrixAlt[0][0][1], cubeMatrixAlt[5][0][1]],// UP-BACK
+    [cubeMatrixAlt[0][1][0], cubeMatrixAlt[1][0][1]], // UP-LEFT
+    [cubeMatrixAlt[0][2][1], cubeMatrixAlt[2][0][1]], // UP-FRONT
+    [cubeMatrixAlt[0][1][2], cubeMatrixAlt[3][0][1]] // UP-RIGHT
+  ]
+
+
+upLayerCorners = [
+  [cubeMatrixAlt[0][0][0], cubeMatrixAlt[5][0][2], cubeMatrixAlt[1][0][0]],// UP-BACK-LEFT
+  [cubeMatrixAlt[0][2][0], cubeMatrixAlt[2][0][0], cubeMatrixAlt[1][0][2]], // UP-FRONT-LEFT
+  [cubeMatrixAlt[0][2][2], cubeMatrixAlt[2][0][2], cubeMatrixAlt[3][0][0]], // UP-FRONT-RIGHT
+  [cubeMatrixAlt[0][0][2], cubeMatrixAlt[5][0][0], cubeMatrixAlt[3][0][2]] // UP-BACK-RIGHT
+]
+
+  
+  midLayerEdges = [
+
+    [cubeMatrixAlt[5][1][2], cubeMatrixAlt[1][1][0]], // BACK-LEFT
+    [cubeMatrixAlt[2][1][0], cubeMatrixAlt[1][1][2]], // FRONT-LEFT
+    [cubeMatrixAlt[2][1][2], cubeMatrixAlt[3][1][0]], // FRONT-RIGHT
+    [cubeMatrixAlt[5][1][0], cubeMatrixAlt[3][1][2]] // BACK-RIGHT
+  ]
+  
+
+
+
+  downLayerEdges = [
+    [cubeMatrixAlt[4][2][1], cubeMatrixAlt[5][2][1]], // DOWN-BACK
+    [cubeMatrixAlt[4][1][0], cubeMatrixAlt[1][2][1]], // DOWN-LEFT
+    [cubeMatrixAlt[4][0][1], cubeMatrixAlt[2][2][1]], // DOWN-FRONT
+    [cubeMatrixAlt[4][1][2], cubeMatrixAlt[3][2][1]] // DOWN-RIGHT
+  ]
+ 
+
+downLayerCorners = [
+  [cubeMatrixAlt[4][2][0], cubeMatrixAlt[5][2][2], cubeMatrixAlt[1][2][0]],// DOWN-BACK-LEFT
+  [cubeMatrixAlt[4][0][0], cubeMatrixAlt[2][2][0], cubeMatrixAlt[1][2][2]], // DOWN-FRONT-LEFT
+  [cubeMatrixAlt[4][0][2], cubeMatrixAlt[2][2][2], cubeMatrixAlt[3][2][0]], // DOWN-FRONT-RIGHT
+  [cubeMatrixAlt[4][2][2], cubeMatrixAlt[5][2][0], cubeMatrixAlt[3][2][2]] // DOWN-BACK-RIGHT
+
+]
+
+
+
+
+}else{
+  facetMainArr[faceIndex].push(facetElement)
+
+
+// use facetMainArray elements to pupulate cube faces
+  // on each face element
+  faceElements.forEach((face, indexOfFace) =>{
+
+    // find the corresponding group of facets
+    facetMainArr[indexOfFace].forEach((facetMember, indexOfMember) =>{
+
+      // append each facet to the face
+      face.append(facetMember)
+    })
+    
+  })
+
+
+}
+
+  // holds all cubies
+
+    })
+  
+    })
+  
+  })
+
+allCubiesArray = [downLayerCorners, downLayerEdges, midLayerEdges, upLayerCorners, upLayerEdges]
+// console.log(allCubiesArray)
+
+
+
+  if(double == 'double'){
+    switch(doubleFace){
+      case 'up': 
+      upRotate('u2-btnless')
+      break;
+      case 'down': 
+      downRotate('d2-btnless')
+      break;
+      case 'left': 
+      leftRotate('l2-btnless')
+      break;
+      case 'right': 
+      rightRotate('r2-btnless')
+      break;
+      case 'front': 
+      frontRotate('f2-btnless')
+      break;
+      case 'back': 
+      backRotate('b2-btnless')
+      break;
+    
+    }
+      }
+
+  }
+
+// to render number of moves, get the text content from the moves output paragraph and convert to a number
+  let lastMove = Number(movesPara.textContent)
+if(double == 'double'){
+  // when a double rotation is made, increase number by 0.5, so on the second move the number will increment by 1. 
+lastMove + 0.5
+}else{
+// increment the value each time a non-double rotation is made
+  lastMove ++
+movesPara.textContent = lastMove
+}
+
+
+
+
+  // if this is not the first render then the update argument will have the string value 'update'
+  if(update){
+setTimeout(() => {
+  newArray = [[], [], [], [], [], []]
+  runRender(newArray)
+}, 50);
+
+
+  }else{
+runRender()
+  }
+  
+}
+// when page opens up the cube is rendered in the solved configuration
+renderCube(cubeMatrixAlt)
+
+OLD ROTATIONS: ----------------------------------------------------------------------------------
+
+// U or U' move
+function upRotate(button, double){
+
+switch(button){
+  case 'u-btn': // execute default move - 
+  // left, front, right and back have last layer, row 1 rotated. 
+  // row 'A' receives row'B' facets - left recieves back, front receives left, right receives front, and back receives right; // everything on the turned face needs to be changed (aside from center piece which is at index position '4')
+case 'u2-btn': // request for a double face rotation i.e 'U2'
+case 'u2-btnless':
+let newUp = [
+
+  [cubeMatrixAlt[0][2][0], cubeMatrixAlt[0][1][0], cubeMatrixAlt[0][0][0]], 
+  [cubeMatrixAlt[0][2][1], cubeMatrixAlt[0][1][1], cubeMatrixAlt[0][0][1]], 
+  [cubeMatrixAlt[0][2][2], cubeMatrixAlt[0][1][2], cubeMatrixAlt[0][0][2]]
+
+
+]
+
+
+let  newLeft = [
+  cubeMatrixAlt[2][0],
+  cubeMatrixAlt[1][1],
+  cubeMatrixAlt[1][2]
+]
+
+let  newFront = [
+  cubeMatrixAlt[3][0],
+  cubeMatrixAlt[2][1],
+  cubeMatrixAlt[2][2]
+]
+
+let  newRight = [
+  cubeMatrixAlt[5][0],
+  cubeMatrixAlt[3][1],
+  cubeMatrixAlt[3][2]
+]
+
+
+let  newBack = [
+  cubeMatrixAlt[1][0],
+  cubeMatrixAlt[5][1],
+  cubeMatrixAlt[5][2]
+]
+
+
+let newConfig = [
+newUp,
+newLeft,
+newFront, 
+newRight, 
+cubeMatrixAlt[4],
+newBack,
+
+
+
+
+
+
+
+
+]
+// if double rotation button pressed use relevant double rotation output
+// button == 'u-btn'? paraOutput.textContent += ' U - ': paraOutput.textContent += ' U2 - ';
+// if a double rotate button is clicked, add the double argument as a third parameter, use default parameters only
+
+if(button == 'u-btn'){paraOutput.textContent += ' U - '}
+if(button == 'u2-btn'){paraOutput.textContent += ' U2 - '}
+
+double == 'double'? renderCube(newConfig, 'update', double, 'up'): renderCube(newConfig, 'update')
+break;
+
+    case 'u-prime-btn': // execute prime move
+    let newUpPrime = [
+
+
+      [cubeMatrixAlt[0][0][2], cubeMatrixAlt[0][1][2], cubeMatrixAlt[0][2][2]], 
+      [cubeMatrixAlt[0][0][1], cubeMatrixAlt[0][1][1], cubeMatrixAlt[0][2][1]], 
+      [cubeMatrixAlt[0][0][0], cubeMatrixAlt[0][1][0], cubeMatrixAlt[0][2][0]]
+    
+    ]
+    
+    
+    let newLeftPrime = [
+      cubeMatrixAlt[5][0],
+      cubeMatrixAlt[1][1],
+      cubeMatrixAlt[1][2]
+    ]
+    
+    let newFrontPrime = [
+      cubeMatrixAlt[1][0],
+      cubeMatrixAlt[2][1],
+      cubeMatrixAlt[2][2]
+    ]
+    
+    let newRightPrime = [
+      cubeMatrixAlt[2][0],
+      cubeMatrixAlt[3][1],
+      cubeMatrixAlt[3][2]
+    ]
+    
+    
+    let newBackPrime = [
+      cubeMatrixAlt[3][0],
+      cubeMatrixAlt[5][1],
+      cubeMatrixAlt[5][2]
+    ]
+    
+    
+    let newConfigPrime = [
+    newUpPrime,
+    newLeftPrime,
+    newFrontPrime, 
+    newRightPrime, 
+    cubeMatrixAlt[4],
+    newBackPrime, 
+   
+
+
+    ]
+    paraOutput.textContent += ' U\' - '
+
+    renderCube(newConfigPrime, 'update')
+    
+break;
+}
+}
+
+
+// D or D' move
+function downRotate(button, double){
+
+
+  switch(button){
+      case 'd-btn': // down default
+      case 'd2-btn':
+        case 'd2-btnless': // this is an algorithm case, and is not activated by a button press
+
+      let newLeft = [
+        cubeMatrixAlt[1][0],
+        cubeMatrixAlt[1][1],
+        cubeMatrixAlt[5][2]
+      ]
+      
+      let newFront = [
+        cubeMatrixAlt[2][0],
+        cubeMatrixAlt[2][1],
+        cubeMatrixAlt[1][2]
+      ]
+      
+      let newRight = [
+        cubeMatrixAlt[3][0],
+        cubeMatrixAlt[3][1],
+        cubeMatrixAlt[2][2]
+      ]
+      
+      
+      let newBack = [
+        cubeMatrixAlt[5][0],
+        cubeMatrixAlt[5][1],
+        cubeMatrixAlt[3][2]
+      ]
+      
+      let newDown = [
+        [cubeMatrixAlt[4][2][0], cubeMatrixAlt[4][1][0], cubeMatrixAlt[4][0][0]], 
+        [cubeMatrixAlt[4][2][1], cubeMatrixAlt[4][1][1], cubeMatrixAlt[4][0][1]], 
+        [cubeMatrixAlt[4][2][2], cubeMatrixAlt[4][1][2], cubeMatrixAlt[4][0][2]]
+      
+      ]
+      
+      let newConfig = [
+      cubeMatrixAlt[0],
+      newLeft,
+      newFront, 
+      newRight, 
+      newDown,
+      newBack
+
+      ]
+
+      // shortcut to render output to match rotation type
+      // button == 'd-btn'? paraOutput.textContent += ' D - ': paraOutput.textContent += ' D2 - '
+// if a double rotate button is clicked, add the double argument as a third parameter, use default parameters only
+
+if(button == 'd-btn'){paraOutput.textContent += ' D - '}
+if(button == 'd2-btn'){paraOutput.textContent += ' D2 - '}
+
+double == 'double'? renderCube(newConfig, 'update', double, 'down'): renderCube(newConfig, 'update')
+break;
+
+    case 'd-prime-btn': // down prime
+
+    let newLeftPrime = [
+      cubeMatrixAlt[1][0],
+      cubeMatrixAlt[1][1],
+      cubeMatrixAlt[2][2]
+    ]
+    
+    let newFrontPrime = [
+      cubeMatrixAlt[2][0],
+      cubeMatrixAlt[2][1],
+      cubeMatrixAlt[3][2]
+    ]
+    
+    let newRightPrime = [
+      cubeMatrixAlt[3][0],
+      cubeMatrixAlt[3][1],
+      cubeMatrixAlt[5][2]
+    ]
+    
+    
+    let newBackPrime = [
+      cubeMatrixAlt[5][0],
+      cubeMatrixAlt[5][1],
+      cubeMatrixAlt[1][2]
+    ]
+    
+    let newDownPrime = [
+      [cubeMatrixAlt[4][0][2], cubeMatrixAlt[4][1][2], cubeMatrixAlt[4][2][2]], 
+      [cubeMatrixAlt[4][0][1], cubeMatrixAlt[4][1][1], cubeMatrixAlt[4][2][1]], 
+      [cubeMatrixAlt[4][0][0], cubeMatrixAlt[4][1][0], cubeMatrixAlt[4][2][0]]
+    
+    ]
+    
+    let newConfigPrime = [
+    cubeMatrixAlt[0],
+    newLeftPrime,
+    newFrontPrime, 
+    newRightPrime, 
+    newDownPrime,
+    newBackPrime, 
+
+
+    ]
+    paraOutput.textContent += ' D\' - '
+
+    renderCube(newConfigPrime, 'update')
+    break;
+  }
+}
+
+
+// L or L' move
+function leftRotate(button, double){
+ 
+
+  switch(button){
+    case 'l-btn':
+      case 'l2-btn':
+        case 'l2-btnless':
+
+    let newUp = [
+      [cubeMatrixAlt[5][2][2], cubeMatrixAlt[0][0][1], cubeMatrixAlt[0][0][2]], 
+      [cubeMatrixAlt[5][1][2], cubeMatrixAlt[0][1][1], cubeMatrixAlt[0][1][2]], 
+      [cubeMatrixAlt[5][0][2], cubeMatrixAlt[0][2][1], cubeMatrixAlt[0][2][2]]
+     ]
+
+
+      let newLeft = [
+        [cubeMatrixAlt[1][2][0], cubeMatrixAlt[1][1][0], cubeMatrixAlt[1][0][0]], 
+        [cubeMatrixAlt[1][2][1], cubeMatrixAlt[1][1][1], cubeMatrixAlt[1][0][1]], 
+        [cubeMatrixAlt[1][2][2], cubeMatrixAlt[1][1][2], cubeMatrixAlt[1][0][2]]
+      ]
+
+      let newFront = [
+  [cubeMatrixAlt[0][0][0], cubeMatrixAlt[2][0][1], cubeMatrixAlt[2][0][2]], 
+  [cubeMatrixAlt[0][1][0], cubeMatrixAlt[2][1][1], cubeMatrixAlt[2][1][2]], 
+  [cubeMatrixAlt[0][2][0], cubeMatrixAlt[2][2][1], cubeMatrixAlt[2][2][2]]
+       ]
+      
+// right remains unchanged
+      let newRight = cubeMatrixAlt[3]
+      
+      
+      let newBack = [
+        [cubeMatrixAlt[5][0][0], cubeMatrixAlt[5][0][1], cubeMatrixAlt[4][2][0]], 
+        [cubeMatrixAlt[5][1][0], cubeMatrixAlt[5][1][1], cubeMatrixAlt[4][1][0]], 
+        [cubeMatrixAlt[5][2][0], cubeMatrixAlt[5][2][1], cubeMatrixAlt[4][0][0]]
+      ]
+      
+      let newDown = [
+        [cubeMatrixAlt[2][0][0], cubeMatrixAlt[4][0][1], cubeMatrixAlt[4][0][2]], 
+        [cubeMatrixAlt[2][1][0], cubeMatrixAlt[4][1][1], cubeMatrixAlt[4][1][2]], 
+        [cubeMatrixAlt[2][2][0], cubeMatrixAlt[4][2][1], cubeMatrixAlt[4][2][2]]
+      
+      ]
+
+
+      
+      let newConfig = [
+      newUp,
+      newLeft,
+      newFront, 
+      newRight, 
+      newDown,
+      newBack 
+
+  
+      ]
+      // shortcut to render output to match rotation type
+      // button == 'l-btn'? paraOutput.textContent += ' L - ': paraOutput.textContent += ' L2 - '
+
+      if(button == 'l-btn'){paraOutput.textContent += ' L - '}
+if(button == 'l2-btn'){paraOutput.textContent += ' L2 - '}
+
+
+// if a double rotate button is clicked, add the double argument as a third parameter, use default parameters only
+double == 'double'? renderCube(newConfig, 'update', double, 'left'): renderCube(newConfig, 'update')
+      break;
+ case 'l-prime-btn':
+  
+ let newUpPrime = [
+  [cubeMatrixAlt[2][0][0], cubeMatrixAlt[0][0][1], cubeMatrixAlt[0][0][2]], 
+  [cubeMatrixAlt[2][1][0], cubeMatrixAlt[0][1][1], cubeMatrixAlt[0][1][2]], 
+  [cubeMatrixAlt[2][2][0], cubeMatrixAlt[0][2][1], cubeMatrixAlt[0][2][2]]
+ ]
+
+// left remains unchanged
+  let newLeftPrime = [
+    [cubeMatrixAlt[1][0][2], cubeMatrixAlt[1][1][2], cubeMatrixAlt[1][2][2]], 
+    [cubeMatrixAlt[1][0][1], cubeMatrixAlt[1][1][1], cubeMatrixAlt[1][2][1]], 
+    [cubeMatrixAlt[1][0][0], cubeMatrixAlt[1][1][0], cubeMatrixAlt[1][2][0]]
+  ]
+
+  let newFrontPrime = [
+[cubeMatrixAlt[4][0][0], cubeMatrixAlt[2][0][1], cubeMatrixAlt[2][0][2]], 
+[cubeMatrixAlt[4][1][0], cubeMatrixAlt[2][1][1], cubeMatrixAlt[2][1][2]], 
+[cubeMatrixAlt[4][2][0], cubeMatrixAlt[2][2][1], cubeMatrixAlt[2][2][2]]
+  ]
+  
+  // right face remains unchanged
+  let newRightPrime = cubeMatrixAlt[3]
+  
+  
+  let newBackPrime = [
+    [cubeMatrixAlt[5][0][0], cubeMatrixAlt[5][0][1], cubeMatrixAlt[0][2][0]], 
+    [cubeMatrixAlt[5][1][0], cubeMatrixAlt[5][1][1], cubeMatrixAlt[0][1][0]], 
+    [cubeMatrixAlt[5][2][0], cubeMatrixAlt[5][2][1], cubeMatrixAlt[0][0][0]]
+  ]
+  
+  let newDownPrime = [
+    [cubeMatrixAlt[5][2][2], cubeMatrixAlt[4][0][1], cubeMatrixAlt[4][0][2]], 
+    [cubeMatrixAlt[5][1][2], cubeMatrixAlt[4][1][1], cubeMatrixAlt[4][1][2]], 
+    [cubeMatrixAlt[5][0][2], cubeMatrixAlt[4][2][1], cubeMatrixAlt[4][2][2]]
+  
+  ]
+
+
+  
+  let newConfigPrime = [
+  newUpPrime,
+  newLeftPrime,
+  newFrontPrime, 
+  newRightPrime, 
+  newDownPrime,
+  newBackPrime 
+
+
+  ]
+  paraOutput.textContent += ' L\' - '
+
+
+  renderCube(newConfigPrime, 'update')
+}
+}
+
+
+// R or R' move
+function rightRotate(button, double){
+
+
+  switch(button){
+      case 'r-btn':
+        case 'r2-btn':
+          case 'r2-btnless':
+
+      let newUp = [
+        [cubeMatrixAlt[0][0][0], cubeMatrixAlt[0][0][1], cubeMatrixAlt[2][0][2]], 
+        [cubeMatrixAlt[0][1][0], cubeMatrixAlt[0][1][1], cubeMatrixAlt[2][1][2]], 
+        [cubeMatrixAlt[0][2][0], cubeMatrixAlt[0][2][1], cubeMatrixAlt[2][2][2]]
+       ]
+
+// left remains unchanged
+        let newLeft = cubeMatrixAlt[1]
+
+        let newFront = [
+    [cubeMatrixAlt[2][0][0], cubeMatrixAlt[2][0][1], cubeMatrixAlt[4][0][2]], 
+    [cubeMatrixAlt[2][1][0], cubeMatrixAlt[2][1][1], cubeMatrixAlt[4][1][2]], 
+    [cubeMatrixAlt[2][2][0], cubeMatrixAlt[2][2][1], cubeMatrixAlt[4][2][2]]
+        ]
+        
+        let newRight = [
+  [cubeMatrixAlt[3][2][0], cubeMatrixAlt[3][1][0], cubeMatrixAlt[3][0][0]], 
+  [cubeMatrixAlt[3][2][1], cubeMatrixAlt[3][1][1], cubeMatrixAlt[3][0][1]], 
+  [cubeMatrixAlt[3][2][2], cubeMatrixAlt[3][1][2], cubeMatrixAlt[3][0][2]]
+
+        ]
+        
+        
+        let newBack = [
+          [cubeMatrixAlt[0][2][2], cubeMatrixAlt[5][0][1], cubeMatrixAlt[5][0][2]], 
+          [cubeMatrixAlt[0][1][2], cubeMatrixAlt[5][1][1], cubeMatrixAlt[5][1][2]], 
+          [cubeMatrixAlt[0][0][2], cubeMatrixAlt[5][2][1], cubeMatrixAlt[5][2][2]]
+        ]
+        
+        let newDown = [
+          [cubeMatrixAlt[4][0][0], cubeMatrixAlt[4][0][1], cubeMatrixAlt[5][2][0]], 
+          [cubeMatrixAlt[4][1][0], cubeMatrixAlt[4][1][1], cubeMatrixAlt[5][1][0]], 
+          [cubeMatrixAlt[4][2][0], cubeMatrixAlt[4][2][1], cubeMatrixAlt[5][0][0]]
+        
+        ]
+
+
+        
+        let newConfig = [
+        newUp,
+        newLeft,
+        newFront, 
+        newRight, 
+        newDown,
+        newBack, 
+
+    
+        ]
+      // shortcut to render output to match rotation type
+      if(button == 'r-btn'){paraOutput.textContent += ' R - '}
+if(button == 'r2-btn'){paraOutput.textContent += ' R2 - '}
+        // if a double rotate button is clicked, add the double argument as a third parameter, use default parameters only
+double == 'double'? renderCube(newConfig, 'update', double, 'right'): renderCube(newConfig, 'update')
+
+        break;
+   case 'r-prime-btn':
+    
+   let newUpPrime = [
+    [cubeMatrixAlt[0][0][0], cubeMatrixAlt[0][0][1], cubeMatrixAlt[5][2][0]], 
+    [cubeMatrixAlt[0][1][0], cubeMatrixAlt[0][1][1], cubeMatrixAlt[5][1][0]], 
+    [cubeMatrixAlt[0][2][0], cubeMatrixAlt[0][2][1], cubeMatrixAlt[5][0][0]]
+   ]
+
+// left remains unchanged
+    let newLeftPrime = cubeMatrixAlt[1]
+
+    let newFrontPrime = [
+[cubeMatrixAlt[2][0][0], cubeMatrixAlt[2][0][1], cubeMatrixAlt[0][0][2]], 
+[cubeMatrixAlt[2][1][0], cubeMatrixAlt[2][1][1], cubeMatrixAlt[0][1][2]], 
+[cubeMatrixAlt[2][2][0], cubeMatrixAlt[2][2][1], cubeMatrixAlt[0][2][2]]
+    ]
+    
+    let newRightPrime = [
+      [cubeMatrixAlt[3][0][2], cubeMatrixAlt[3][1][2], cubeMatrixAlt[3][2][2]], 
+      [cubeMatrixAlt[3][0][1], cubeMatrixAlt[3][1][1], cubeMatrixAlt[3][2][1]], 
+      [cubeMatrixAlt[3][0][0], cubeMatrixAlt[3][1][0], cubeMatrixAlt[3][2][0]]
+
+    ]
+    
+    
+    let newBackPrime = [
+      [cubeMatrixAlt[4][2][2], cubeMatrixAlt[5][0][1], cubeMatrixAlt[5][0][2]], 
+      [cubeMatrixAlt[4][1][2], cubeMatrixAlt[5][1][1], cubeMatrixAlt[5][1][2]], 
+      [cubeMatrixAlt[4][0][2], cubeMatrixAlt[5][2][1], cubeMatrixAlt[5][2][2]]
+    ]
+    
+    let newDownPrime = [
+      [cubeMatrixAlt[4][0][0], cubeMatrixAlt[4][0][1], cubeMatrixAlt[2][0][2]], 
+      [cubeMatrixAlt[4][1][0], cubeMatrixAlt[4][1][1], cubeMatrixAlt[2][1][2]], 
+      [cubeMatrixAlt[4][2][0], cubeMatrixAlt[4][2][1], cubeMatrixAlt[2][2][2]]
+    
+    ]
+
+
+    
+    let newConfigPrime = [
+    newUpPrime,
+    newLeftPrime,
+    newFrontPrime, 
+    newRightPrime, 
+    newDownPrime,
+    newBackPrime, 
+   
+
+    ]
+    paraOutput.textContent += ' R\' - '
+
+    renderCube(newConfigPrime, 'update')
+}
+}
+
+
+// F or F' move
+function frontRotate(button, double){
+
+
+  switch(button){
+    case 'f-btn':
+      case 'f2-btn':
+case 'f2-btnless':
+    let  newUp = [
+      cubeMatrixAlt[0][0],
+      cubeMatrixAlt[0][1],
+      [cubeMatrixAlt[1][2][2], cubeMatrixAlt[1][1][2], cubeMatrixAlt[1][0][2]]
+    ]
+    
+    let  newDown = [
+      [cubeMatrixAlt[3][2][0], cubeMatrixAlt[3][1][0], cubeMatrixAlt[3][0][0]],
+      cubeMatrixAlt[4][1],
+      cubeMatrixAlt[4][2]
+    ]
+
+    let newRight = [
+      [cubeMatrixAlt[0][2][0], cubeMatrixAlt[3][0][1], cubeMatrixAlt[3][0][2]], 
+      [cubeMatrixAlt[0][2][1], cubeMatrixAlt[3][1][1], cubeMatrixAlt[3][1][2]], 
+      [cubeMatrixAlt[0][2][2], cubeMatrixAlt[3][2][1], cubeMatrixAlt[3][2][2]]
+    ]
+
+      let newLeft = [
+        [cubeMatrixAlt[1][0][0], cubeMatrixAlt[1][0][1], cubeMatrixAlt[4][0][0]], 
+        [cubeMatrixAlt[1][1][0], cubeMatrixAlt[1][1][1], cubeMatrixAlt[4][0][1]], 
+        [cubeMatrixAlt[1][2][0], cubeMatrixAlt[1][2][1], cubeMatrixAlt[4][0][2]]
+      ]
+
+      let newFront = [
+        [cubeMatrixAlt[2][2][0], cubeMatrixAlt[2][1][0], cubeMatrixAlt[2][0][0]], 
+        [cubeMatrixAlt[2][2][1], cubeMatrixAlt[2][1][1], cubeMatrixAlt[2][0][1]], 
+        [cubeMatrixAlt[2][2][2], cubeMatrixAlt[2][1][2], cubeMatrixAlt[2][0][2]]
+       ]
+      
+// back remains unchanged
+  let newBack = cubeMatrixAlt[5]
+      
+
+
+
+      
+      let newConfig = [
+      newUp,
+      newLeft,
+      newFront, 
+      newRight, 
+      newDown, 
+      newBack
+  
+      ]
+      // shortcut to render output to match rotation type
+      if(button == 'f-btn'){paraOutput.textContent += ' F - '}
+      if(button == 'f2-btn'){paraOutput.textContent += ' F2 - '}      // if a double rotate button is clicked, add the double argument as a third parameter, use default parameters only
+double == 'double'? renderCube(newConfig, 'update', double, 'front'): renderCube(newConfig, 'update')
+
+      break;
+ case 'f-prime-btn':
+  
+ let newUpPrime = [
+  cubeMatrixAlt[0][0],
+  cubeMatrixAlt[0][1],
+  [cubeMatrixAlt[3][0][0], cubeMatrixAlt[3][1][0], cubeMatrixAlt[3][2][0]]
+
+ ]
+
+// left remains unchanged
+  let newLeftPrime = [
+    [cubeMatrixAlt[1][0][0], cubeMatrixAlt[1][0][1], cubeMatrixAlt[0][2][2]], 
+    [cubeMatrixAlt[1][1][0], cubeMatrixAlt[1][1][1], cubeMatrixAlt[0][2][1]], 
+    [cubeMatrixAlt[1][2][0], cubeMatrixAlt[1][2][1], cubeMatrixAlt[0][2][0]]
+  ]
+
+  let newFrontPrime = [
+    [cubeMatrixAlt[2][0][2], cubeMatrixAlt[2][1][2], cubeMatrixAlt[2][2][2]], 
+    [cubeMatrixAlt[2][0][1], cubeMatrixAlt[2][1][1], cubeMatrixAlt[2][2][1]], 
+    [cubeMatrixAlt[2][0][0], cubeMatrixAlt[2][1][0], cubeMatrixAlt[2][2][0]]
+  ]
+  
+  let newRightPrime = [
+    [cubeMatrixAlt[4][0][2], cubeMatrixAlt[3][0][1], cubeMatrixAlt[3][0][2]], 
+    [cubeMatrixAlt[4][0][1], cubeMatrixAlt[3][1][1], cubeMatrixAlt[3][1][2]], 
+    [cubeMatrixAlt[4][0][0], cubeMatrixAlt[3][2][1], cubeMatrixAlt[3][2][2]]
+  ]
+  
+// back remains unchanged
+let newBackPrime = cubeMatrixAlt[5]
+
+  let newDownPrime = [
+    [cubeMatrixAlt[1][0][2], cubeMatrixAlt[1][1][2], cubeMatrixAlt[1][2][2]],
+    cubeMatrixAlt[4][1],
+    cubeMatrixAlt[4][2]
+  
+  ]
+
+
+  
+  let newConfigPrime = [
+  newUpPrime,
+  newLeftPrime,
+  newFrontPrime, 
+  newRightPrime, 
+  newDownPrime,
+  newBackPrime, 
+
+
+  ]
+  paraOutput.textContent += ' F\' - '
+
+  renderCube(newConfigPrime, 'update')
+}
+}
+
+
+// B or B' move
+function backRotate(button, double){
+  
+
+  switch(button){
+    case 'b-btn':
+      case 'b2-btn':
+case 'b2-btnless':
+    let  newUp = [
+      [cubeMatrixAlt[3][0][2], cubeMatrixAlt[3][1][2], cubeMatrixAlt[3][2][2]],
+      cubeMatrixAlt[0][1],
+      cubeMatrixAlt[0][2],
+
+    ]
+    
+    let  newDown = [
+      cubeMatrixAlt[4][0],
+      cubeMatrixAlt[4][1],
+      [cubeMatrixAlt[1][0][0], cubeMatrixAlt[1][1][0], cubeMatrixAlt[1][2][0]]
+    ]
+
+    let newRight = [
+      [cubeMatrixAlt[3][0][0], cubeMatrixAlt[3][0][1], cubeMatrixAlt[4][2][2]], 
+      [cubeMatrixAlt[3][1][0], cubeMatrixAlt[3][1][1], cubeMatrixAlt[4][2][1]], 
+      [cubeMatrixAlt[3][2][0], cubeMatrixAlt[3][2][1], cubeMatrixAlt[4][2][0]]
+    ]
+
+      let newLeft = [
+        [cubeMatrixAlt[0][0][2], cubeMatrixAlt[1][0][1], cubeMatrixAlt[1][0][2]], 
+        [cubeMatrixAlt[0][0][1], cubeMatrixAlt[1][1][1], cubeMatrixAlt[1][1][2]], 
+        [cubeMatrixAlt[0][0][0], cubeMatrixAlt[1][2][1], cubeMatrixAlt[1][2][2]]
+      ]
+
+      let newBack = [
+        [cubeMatrixAlt[5][2][0], cubeMatrixAlt[5][1][0], cubeMatrixAlt[5][0][0]], 
+        [cubeMatrixAlt[5][2][1], cubeMatrixAlt[5][1][1], cubeMatrixAlt[5][0][1]], 
+        [cubeMatrixAlt[5][2][2], cubeMatrixAlt[5][1][2], cubeMatrixAlt[5][0][2]]
+      ]
+// front remains unchanged
+      let newFront = cubeMatrixAlt[2]
+
+      
+      let newConfig = [
+      newUp,
+      newLeft,
+      newFront, 
+      newRight, 
+      newDown,
+      newBack, 
+
+  
+      ]
+      // shortcut to render output to match rotation type
+      if(button == 'b-btn'){paraOutput.textContent += ' B - '}
+      if(button == 'b2-btn'){paraOutput.textContent += ' B2 - '}
+      // if a double rotate button is clicked, add the double argument as a third parameter, use default parameters only
+double == 'double'? renderCube(newConfig, 'update', double, 'back'): renderCube(newConfig, 'update')
+
+      break;
+ case 'b-prime-btn':
+  
+ let newUpPrime = [
+  [cubeMatrixAlt[1][2][0], cubeMatrixAlt[1][1][0], cubeMatrixAlt[1][0][0]],
+  cubeMatrixAlt[0][1],
+  cubeMatrixAlt[0][2]
+ ]
+
+
+  let newLeftPrime = [
+    [cubeMatrixAlt[4][2][0], cubeMatrixAlt[1][0][1], cubeMatrixAlt[1][0][2]], 
+    [cubeMatrixAlt[4][2][1], cubeMatrixAlt[1][1][1], cubeMatrixAlt[1][1][2]], 
+    [cubeMatrixAlt[4][2][2], cubeMatrixAlt[1][2][1], cubeMatrixAlt[1][2][2]]
+  ]
+  // front remains unchanged
+  let newFrontPrime = [...cubeMatrixAlt[2]]
+
+  let newRightPrime = [
+    [cubeMatrixAlt[3][0][0], cubeMatrixAlt[3][0][1], cubeMatrixAlt[0][0][0]], 
+    [cubeMatrixAlt[3][1][0], cubeMatrixAlt[3][1][1], cubeMatrixAlt[0][0][1]], 
+    [cubeMatrixAlt[3][2][0], cubeMatrixAlt[3][2][1], cubeMatrixAlt[0][0][2]]
+  ]
+  
+
+let newBackPrime = [
+  [cubeMatrixAlt[5][0][2], cubeMatrixAlt[5][1][2], cubeMatrixAlt[5][2][2]], 
+  [cubeMatrixAlt[5][0][1], cubeMatrixAlt[5][1][1], cubeMatrixAlt[5][2][1]], 
+  [cubeMatrixAlt[5][0][0], cubeMatrixAlt[5][1][0], cubeMatrixAlt[5][2][0]]
+]
+
+  let newDownPrime = [
+
+    cubeMatrixAlt[4][0],
+    cubeMatrixAlt[4][1],
+    [cubeMatrixAlt[3][2][2], cubeMatrixAlt[3][1][2], cubeMatrixAlt[3][0][2]]
+  
+  ]
+
+
+  
+  let newConfigPrime = [
+  newUpPrime,
+  newLeftPrime,
+  newFrontPrime, 
+  newRightPrime, 
+  newDownPrime,
+  newBackPrime, 
+
+
+  ]
+
+
+  paraOutput.textContent += ' B\' - '
+
+  renderCube(newConfigPrime, 'update')
+}}
+
+
+// ================================== NEW RENDERER =====================================
+
+
+
+const renderCube = (cube, update, oldCube, button) =>{
+if(update){
+  console.log('old cube')
+  console.log(oldCube)
+  console.log('button pressed')
+  console.log(button)
+  console.log('post rotation cube update; checking cube...')
+  console.log(cube)
+}else{
+  console.log('first cube render')
+  console.log(cube)
+}
+
+let algoArray = []
+  const runRender = (newConfig) =>{
+// new config will either be null or an empty cube array. Update will either be 'update', or 'manual scramble'.  if there's an update
+
+
+// ====== IN THIS SECTION NEW FACET ELEMENTS ARE CREATED AND APPENEDED TO THE FACES OF THE 2D CUBE ===========================================================================================
+
+
+  if(!newConfig || update == 'manual scramble' || update == 'reset' || update == 'check config'){
+
+if(update){
+  console.log('checking update parameter')
+    console.log(update)
+}
+
+    // on the cube matrix array for each subarray (representing one layer of the cube)
+    cube.forEach((face, faceIndex) =>{
+  // loop through the layer elements
+  face.forEach((layer, indexOfLayer) =>{
+
+
+// loop through each element on the layer (which represents a layer facet)
+    layer.forEach((facet, indexOfFacet) =>{
+  // create a div for each element 
+  let facetElement = document.createElement('div')
+  // create an appropriate classname for the facet, the string on the current position
+  let facetClass = 'facet-' + facetsNames[indexOfLayer][indexOfFacet]
+  let centerFacetClass = 'facet-' + facetsNames[indexOfLayer][indexOfFacet] + ' center_facet'
+
+// SET A DIFFERENT CLASS FOR CENTER PIECE FACETS
+if(indexOfLayer === 1 && indexOfFacet === 1){
+  // add center facet's classname to the div
+  facetElement.setAttribute('class', centerFacetClass)
+}else{
+  // add regular facet's classname to the div
+  facetElement.setAttribute('class', facetClass)
+}
+
+  
+      // get colour character from cube matrix subarray which corresponds to face elements array
+      faceColour = facet
+  
+      switch(faceColour){ // switch colour character and assign colour associated with character
+        case 'g': colourName = 'rgb(0, 206, 0)'
+        break;
+        case 'o': colourName = 'orange'
+        break;
+        case 'b': colourName = 'blue'
+        break;
+        case 'r': colourName = 'red'
+        break;
+        case 'y': colourName = 'yellow'
+        break;
+        case 'w': colourName = 'white'
+        break;
+        case 'bl': colourName = 'black' // T is for transparent, which is used for the configuration. 
+        break;
+          }
+  
+     // style the facet and add face colour
+     facetElement.style.cssText = `width:50px; height:50px;  border:1px solid black; border-radius:5px; background-color:${colourName};}`
+
+
+     // only change and rerender face elements if the newConfig param was an array, which only occurs when the update param to the main function is not an empty string, and when the update string is 'manual config'.  That way, The only newly rendered cube will be the black cube that the user will manually set the colors on.  User activated moves will only affect the 3D cube and not the modal cube; but cube matrix will nonetheless be updated with the new facet colours on each face. 
+if(newConfig && (update == 'manual scramble' || update == 'reset' || update == 'check config')){
+
+  // first the original facets need removal
+  faceElements.forEach(oldFace =>{
+    while (oldFace.firstChild) {
+      oldFace.removeChild(oldFace.firstChild)
+    }
+    
+       })
+    
+       // face index ranges from 0-5, use that index to find the empty subarray in newConfig and push the new facet div element to that subarray
+  newConfig[faceIndex].push(facetElement)
+
+
+  // taking the DOM faceElement index of each face, use that index to get the subarray containing facet divs for the face, and append each of the facet div elements that the subarray, to the face. 
+  faceElements.forEach((face, indexOfFace) =>{
+    // find the corresponding group of facets
+    newConfig[indexOfFace].forEach((facetMember, indexOfMember) =>{
+
+      // append each facet to the face
+      face.append(facetMember)
+    })
+    
+  })
+
+
+
+
+
+}else{ // otherwise, push the element to the facet main array subarray for holding elements of a specific face (this array has the same structure as the newConfig array). The difference here is that because this is not a new config, there are no facets on any of the face elements yet,  so there's no request to remove any facets,  and the facet div elements which are just created can be appended directly to the face elements.  Both the default cube and the all black cubes take their values from the incoming cube matrix
+  facetMainArr[faceIndex].push(facetElement)
+
+
+// use facetMainArray elements to pupulate cube faces
+  // on each face element
+  faceElements.forEach((face, indexOfFace) =>{
+
+    // find the corresponding group of facets
+    facetMainArr[indexOfFace].forEach((facetMember, indexOfMember) =>{
+
+      // append each facet to the face
+      face.append(facetMember)
+    })
+    
+  })
+
+
+}
+
+  // holds all cubies
+
+    })
+  
+    })
+  
+  })
+
+  }
+
+
+  // replace original cube with new configuration
+  cubeMatrixAlt = []
+  cubeMatrixAlt = [...cube]
+
+
+  // arrays recording edge pice positions
+  upLayerEdges = [
+    [cubeMatrixAlt[0][0][1], cubeMatrixAlt[5][0][1]],// UP-BACK
+    [cubeMatrixAlt[0][1][0], cubeMatrixAlt[1][0][1]], // UP-LEFT
+    [cubeMatrixAlt[0][2][1], cubeMatrixAlt[2][0][1]], // UP-FRONT
+    [cubeMatrixAlt[0][1][2], cubeMatrixAlt[3][0][1]] // UP-RIGHT
+  ]
+
+
+upLayerCorners = [
+  [cubeMatrixAlt[0][0][0], cubeMatrixAlt[5][0][2], cubeMatrixAlt[1][0][0]],// UP-BACK-LEFT
+  [cubeMatrixAlt[0][2][0], cubeMatrixAlt[2][0][0], cubeMatrixAlt[1][0][2]], // UP-FRONT-LEFT
+  [cubeMatrixAlt[0][2][2], cubeMatrixAlt[2][0][2], cubeMatrixAlt[3][0][0]], // UP-FRONT-RIGHT
+  [cubeMatrixAlt[0][0][2], cubeMatrixAlt[5][0][0], cubeMatrixAlt[3][0][2]] // UP-BACK-RIGHT
+]
+
+  
+  midLayerEdges = [
+
+    [cubeMatrixAlt[5][1][2], cubeMatrixAlt[1][1][0]], // BACK-LEFT
+    [cubeMatrixAlt[2][1][0], cubeMatrixAlt[1][1][2]], // FRONT-LEFT
+    [cubeMatrixAlt[2][1][2], cubeMatrixAlt[3][1][0]], // FRONT-RIGHT
+    [cubeMatrixAlt[5][1][0], cubeMatrixAlt[3][1][2]] // BACK-RIGHT
+  ]
+  
+
+
+
+  downLayerEdges = [
+    [cubeMatrixAlt[4][2][1], cubeMatrixAlt[5][2][1]], // DOWN-BACK
+    [cubeMatrixAlt[4][1][0], cubeMatrixAlt[1][2][1]], // DOWN-LEFT
+    [cubeMatrixAlt[4][0][1], cubeMatrixAlt[2][2][1]], // DOWN-FRONT
+    [cubeMatrixAlt[4][1][2], cubeMatrixAlt[3][2][1]] // DOWN-RIGHT
+  ]
+ 
+
+downLayerCorners = [
+  [cubeMatrixAlt[4][2][0], cubeMatrixAlt[5][2][2], cubeMatrixAlt[1][2][0]],// DOWN-BACK-LEFT
+  [cubeMatrixAlt[4][0][0], cubeMatrixAlt[2][2][0], cubeMatrixAlt[1][2][2]], // DOWN-FRONT-LEFT
+  [cubeMatrixAlt[4][0][2], cubeMatrixAlt[2][2][2], cubeMatrixAlt[3][2][0]], // DOWN-FRONT-RIGHT
+  [cubeMatrixAlt[4][2][2], cubeMatrixAlt[5][2][0], cubeMatrixAlt[3][2][2]] // DOWN-BACK-RIGHT
+
+]
+
+
+
+
+allCubiesArray = [downLayerCorners, downLayerEdges, midLayerEdges, upLayerCorners, upLayerEdges]
+
+
+
+
+  }
+
+console.log('algo execution from render cube')
+
+  // if this is not the first render then the update argument will have the string value 'update'
+  if(update){
+setTimeout(() => {
+  newArray = [[], [], [], [], [], []]
+  runRender(newArray)
+}, 50);
+
+
+  }else{
+runRender()
+  }
+  
+}
+// when page opens up the cube is rendered in the solved configuration
+renderCube(cubeMatrixAlt)
+
+
+// ========================= NEW ROTATIONS ======================================
+
+
+
+
+
+
+
+
+
+
+
+// U or U' move
+function upRotate(button, double){
+let preRotateCube = clone(cubeMatrixAlt)
+switch(button){
+  case 'u-btn': //general rule for face facets - CW rotations
+aboutYFaces.forEach((x, i) =>{preRotateCube[x][0] = cubeMatrixAlt[aboutYFaces[(i+1)%4]][0]})
+indexSwap.forEach(y =>{rowArr.forEach((x)=>{preRotateCube[0][y][x] = cubeMatrixAlt[0][2-x][y]})})
+  break;
+case 'u2-btn': // rules for side-face top row shifting and translating face facets on rotated face
+aboutYFaces.forEach((x, i) =>{preRotateCube[x][0] = cubeMatrixAlt[aboutYFaces[(i+2)%4]][0]})
+indexSwap.forEach(y =>{rowArr.forEach(x =>{preRotateCube[0][x][y] = cubeMatrixAlt[0][2-x][2-y]})})
+break;
+case 'u-prime-btn': // general rule for face facets - PRIME rotations
+aboutYFaces.forEach((x, i) =>{preRotateCube[x][0] = cubeMatrixAlt[aboutYFaces[(i+3)%4]][0]})
+indexSwap.forEach(y =>{ rowArr.forEach((x) =>{preRotateCube[0][x][y] = cubeMatrixAlt[0][y][2-x]})})
+break;
+}
+
+let nextCubeMatrixAlt = clone(preRotateCube)
+renderCube(nextCubeMatrixAlt, 'update', cubeMatrixAlt, button)
+}
+
+
+// D or D' move
+function downRotate(button, double){
+  let preRotateCube = clone(cubeMatrixAlt)
+  switch(button){
+      case 'd-btn': // general rule for face facets - cw rotations
+aboutYFaces.forEach((x, i) =>{preRotateCube[x][2] = cubeMatrixAlt[aboutYFaces[(i+3)%4]][2]})
+indexSwap.forEach(y =>{ rowArr.forEach((x)=>{preRotateCube[4][y][x] = cubeMatrixAlt[4][2-x][y]})})
+      break;
+      case 'd2-btn':
+  aboutYFaces.forEach((x, i) =>{preRotateCube[x][2] = cubeMatrixAlt[aboutYFaces[(i+2)%4]][2]})
+  indexSwap.forEach(y =>{rowArr.forEach(x =>{preRotateCube[4][x][y] = cubeMatrixAlt[4][2-x][2-y]})})
+        break;
+    case 'd-prime-btn': // general rule for face facets - PRIME rotations
+aboutYFaces.forEach((x, i) =>{preRotateCube[x][2] = cubeMatrixAlt[aboutYFaces[(i+1)%4]][2]})
+indexSwap.forEach(y =>{ rowArr.forEach((x)=>{preRotateCube[4][x][y] = cubeMatrixAlt[4][y][2-x]})}) 
+    break;
+  }
+  let nextCubeMatrixAlt = clone(preRotateCube)
+renderCube(nextCubeMatrixAlt, 'update', cubeMatrixAlt, button)
+}
+
+
+// L or L' move
+function leftRotate(button, double){
+  let preRotateCube = clone(cubeMatrixAlt)
+  switch(button){
+  case 'l-btn':rowArr.forEach((x) =>{lCW.forEach(sub =>{
+preRotateCube[sub[0]][x][sub[1]] = cubeMatrixAlt[sub[2]][Math.abs(sub[4] - x)][sub[3]]})//B3
+indexSwap.forEach((y) =>{preRotateCube[1][y][x] = cubeMatrixAlt[1][2-x][y]})
+})
+break;
+case 'l2-btn':
+indexSwap.forEach(y =>{rowArr.forEach(x =>{preRotateCube[1][x][y] = cubeMatrixAlt[1][2-x][2-y]})})
+aboutXFaces.forEach((f, i) => { rowArr.forEach(x =>{
+f%4 === 0? preRotateCube[f][x][0] = cubeMatrixAlt[aboutXFaces[(i+2)%4]][x][0]:f%4 === 2?
+preRotateCube[f][x][0] = cubeMatrixAlt[aboutXFaces[(i+2)%4]][2-x][2]: preRotateCube[f][x][2] = cubeMatrixAlt[aboutXFaces[(i+2)%4]][2-x][0]
+})})
+break;
+ case 'l-prime-btn':
+ rowArr.forEach((x) =>{lCCW.forEach(sub =>{
+preRotateCube[sub[0]][x][sub[1]] = cubeMatrixAlt[sub[2]][Math.abs(sub[4]-x)][sub[3]]})//B3
+indexSwap.forEach(y =>{preRotateCube[1][x][y] = cubeMatrixAlt[1][y][2-x]})
+})
+break;
+}
+let nextCubeMatrixAlt = clone(preRotateCube)
+renderCube(nextCubeMatrixAlt, 'update', cubeMatrixAlt, button)
+}
+
+
+
+// R or R' move
+function rightRotate(button, double){
+  let preRotateCube = clone(cubeMatrixAlt)
+  switch(button){
+      case 'r-btn':
+rowArr.forEach((x) =>{rCW.forEach(sub =>{
+preRotateCube[sub[0]][x][sub[1]] = cubeMatrixAlt[sub[2]][Math.abs(sub[4] - x)][sub[3]]})//B3
+indexSwap.forEach((y) =>{preRotateCube[3][y][x] = cubeMatrixAlt[3][2-x][y] })
+    })
+        break;
+        case 'r2-btn':
+        // faceRotationMain(3, '2X')
+indexSwap.forEach(y =>{rowArr.forEach(x =>{preRotateCube[3][x][y] = cubeMatrixAlt[3][2-x][2-y]})})
+aboutXFaces.forEach((f, i) => { rowArr.forEach(x =>{
+f%4 === 0? preRotateCube[f][x][2] = cubeMatrixAlt[aboutXFaces[(i+2)%4]][x][2]:f%4 === 2?
+preRotateCube[f][x][2] = cubeMatrixAlt[aboutXFaces[(i+2)%4]][2-x][0]:preRotateCube[f][x][0] = cubeMatrixAlt[aboutXFaces[(i+2)%4]][2-x][2]})})
+          break;
+   case 'r-prime-btn':
+   rowArr.forEach((x) =>{rCCW.forEach(sub =>{
+preRotateCube[sub[0]][x][sub[1]] = cubeMatrixAlt[sub[2]][Math.abs(sub[4]-x)][sub[3]]})//B3
+// faceRotationMain(3, 'CCW')
+indexSwap.forEach(y =>{preRotateCube[3][x][y] = cubeMatrixAlt[3][y][2-x]})
+})
+break;
+}
+console.log(preRotateCube)
+let nextCubeMatrixAlt = clone(preRotateCube)
+renderCube(nextCubeMatrixAlt, 'update', cubeMatrixAlt, button)
+}
+
+
+// F or F' move
+function frontRotate(button, double){
+  let preRotateCube = clone(cubeMatrixAlt)
+  switch(button){
+    case 'f-btn':
+    rowArr.forEach((x) =>{
+fCWa.forEach(sub =>{preRotateCube[sub[0]][sub[1]][x] = cubeMatrixAlt[sub[2]][2-x][sub[3]]})//A
+fCWb.forEach(sub =>{preRotateCube[sub[0]][x][sub[1]] = cubeMatrixAlt[sub[2]][sub[3]][x]}) //B1
+indexSwap.forEach((y) =>{preRotateCube[2][y][x] = cubeMatrixAlt[2][2-x][y]}) // face
+    })
+      break;
+  case 'f2-btn':
+  console.log('front double clicked')
+  // faceRotationMain(2, '2X')
+  indexSwap.forEach(y =>{rowArr.forEach(x =>{preRotateCube[2][x][y] = cubeMatrixAlt[2][2-x][2-y]})})
+  // NOTE: the formulae for front and back rotations are the same, just row/col numbers change - maybe the four numbers for each case can be sent as a subarray in an array parameter and for each subarray the numbers can be inserted; or the array can be created outside like with the rest of the examples so there would only be one array for F2 moves and one for B2 moves.  seems simpler.  Maybe that technique should be used for left and right double rotates because with the addition of an array the function may be more readable. 
+  rowArr.forEach(x =>{
+preRotateCube[0][2][x] = cubeMatrixAlt[4][0][2-x]
+preRotateCube[4][0][x] = cubeMatrixAlt[0][2][2-x] 
+preRotateCube[1][x][2] = cubeMatrixAlt[3][2-x][0]
+preRotateCube[3][x][0] = cubeMatrixAlt[1][2-x][2]
+  })
+  
+    break;
+ case 'f-prime-btn':
+rowArr.forEach((x) =>{
+fCCWa.forEach(sub =>{preRotateCube[sub[0]][x][sub[1]] = cubeMatrixAlt[sub[2]][sub[3]][2-x]})//B2
+fCCWb.forEach(sub =>{preRotateCube[sub[0]][sub[1]][x] = cubeMatrixAlt[sub[2]][x][sub[3]]}) //A
+indexSwap.forEach(y =>{preRotateCube[2][x][y] = cubeMatrixAlt[2][y][2-x]})// face
+    })
+break;
+}
+console.log(preRotateCube)
+let nextCubeMatrixAlt = clone(preRotateCube)
+renderCube(nextCubeMatrixAlt, 'update', cubeMatrixAlt, button)
+}// clockwise methods 1 and 2
+
+// B or B' move
+function backRotate(button, double){
+  let preRotateCube = clone(cubeMatrixAlt)
+  switch(button){
+    case 'b-btn':
+    rowArr.forEach(x =>{
+bCWa.forEach(sub =>{preRotateCube[sub[0]][sub[1]][x] = cubeMatrixAlt[sub[2]][x][sub[3]]}) //A
+bCWb.forEach(sub =>{preRotateCube[sub[0]][x][sub[1]] = cubeMatrixAlt[sub[2]][sub[3]][2-x]})//B2
+// faceRotationMain(5, 'CW')
+indexSwap.forEach(y =>{preRotateCube[5][y][x] = cubeMatrixAlt[5][2-x][y]})
+    })
+      break;
+      case 'b2-btn':
+        console.log('back double clicked')
+      // faceRotationMain(5, '2X')
+  indexSwap.forEach(y =>{rowArr.forEach(x =>{preRotateCube[5][x][y] = cubeMatrixAlt[5][2-x][2-y]})})
+  rowArr.forEach(x =>{
+preRotateCube[0][0][x] = cubeMatrixAlt[4][2][2-x]
+preRotateCube[4][2][x] = cubeMatrixAlt[0][0][2-x] 
+preRotateCube[1][x][0] = cubeMatrixAlt[3][2-x][2]
+preRotateCube[3][x][2] = cubeMatrixAlt[1][2-x][0]
+  })
+  
+      break;
+ case 'b-prime-btn':
+      rowArr.forEach(x =>{
+bCCWa.forEach(sub =>{preRotateCube[sub[0]][x][sub[1]] = cubeMatrixAlt[sub[2]][sub[3]][x]})//B1
+bCCWb.forEach(sub =>{preRotateCube[sub[0]][sub[1]][x] = cubeMatrixAlt[sub[2]][2-x][sub[3]]}) //A
+// faceRotationMain(5, 'CCW')
+indexSwap.forEach(y =>{preRotateCube[5][x][y] = cubeMatrixAlt[5][y][2-x]})
+      })
+break;
+}
+console.log(preRotateCube)
+let nextCubeMatrixAlt = clone(preRotateCube)
+renderCube(nextCubeMatrixAlt, 'update', cubeMatrixAlt, button)
+}
+

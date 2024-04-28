@@ -1,0 +1,63 @@
+RED (255, 42, 72)
+
+ORANGE (139 , 194, 67)
+
+GREEN (142, 202, 70)
+
+BLUE (0, 125, 87)
+
+WHITE ((201 202, 204)
+
+YELLOW (226, 194, 75)
+
+
+FIND COLOUR FUNCTION
+
+
+    function findColor(input, clr, tolerance){
+// if(!input.canvas.childNodes[0]){
+//     return undefined
+// }
+input.loadPixels()
+console.log(input)
+// console.log(v)
+
+        let rMatch = clr['levels'][0]
+        let gMatch = clr['levels'][1]
+        let bMatch = clr['levels'][2]
+
+        for (let x = 75; x <85; x++){
+            for (let y = 75; y <85 ; y++){
+let rIndx = (y*5 + x)*4
+let  gIndx = rIndx + 1, bIndx = rIndx + 2
+let r = p5.pixels[rIndx]
+let g = p5.pixels[gIndx]
+let b = p5.pixels[bIndx]
+ 
+    console.log(r, g, b)
+
+//             if(r >= p5.abs(rMatch - tolerance) &&
+// g >= p5.abs(gMatch - tolerance) && b >= p5.abs(bMatch - tolerance)){
+//         console.log('match found')
+//         return p5.createVector(x, y)
+//         }
+
+            }
+            }
+    }
+
+// coordinates for checking mistakes
+
+regionArray.push(new Region(75, 85, 75, 85))
+regionArray.push(new Region(185, 195, 75, 85))
+regionArray.push(new Region(295, 305, 75, 85))
+regionArray.push(new Region(75, 85, 185, 195))
+regionArray.push(new Region(185, 195, 185, 195))
+regionArray.push(new Region(295, 305, 185, 195))
+regionArray.push(new Region(75, 85, 295, 305))
+regionArray.push(new Region(185, 195, 295, 305))
+regionArray.push(new Region(295, 305, 295, 305))
+        console.log(regionArray)
+
+
+

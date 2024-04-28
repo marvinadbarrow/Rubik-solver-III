@@ -1,0 +1,24 @@
+layer 3/3 issues with scramble which faces;
+6c - solved
+10a - solved
+10c - solved
+15b - 
+
+SOLVED:  - looks like it was the fact that I didn't use spread operator in the algo array, where there was a first move, and last move, but in the middle a subarray containing 'middle' moves.  
+
+OTHER SCRAMBLES - the local storage scrambles
+ls5 - working
+ls2 - working
+ls3 - working
+lst1 - not working -  There are no green facets on the original cube, aside from the green center piece. 
+ls6 error - not working (infinite loop at cross)
+ls1 -not working (infinite loop at cross)
+
+ISSUE FOUND... Missed out a case in the switch statement checking vertical edge position and orientation of cross piece on mid layer.  The conditions for vertical index '0' was missing, so the piece at that positition was treated as if it was the default, which is position 3; and so it was wrongly inserted, but not picked up later on so it resulted in an infinite loop, possibly of pieces ending up in the mid layer zero index and consequently getting incorrectly placed.  
+LS1 WORKING
+ls6 having issues; now with solving the third cross piece
+ls-6-error now SOLVED. 
+
+orientedCrossEdgeArray.length <
+case for last move =
+console.log('unsolvedPermutationArray')

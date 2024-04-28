@@ -1,0 +1,143 @@
+function preAutoScramble(array, speed){
+  console.log('speed')
+  console.log(speed)
+  let speedOffset, algoTime, velocity
+  if(speed){
+    speedOffset = speed + 20
+    algoTime = array.length*speedOffset
+    velocity = speed
+  }else{
+    algoTime = array.length*1510
+    velocity = 1500
+  }
+
+
+array.forEach((rotation, i) =>{
+ setTimeout(() => {
+   faceRotate3D(array[i])
+ }, i*velocity);
+})
+
+setTimeout(() => {
+solveInProgress = []
+}, algoTime);
+}
+
+
+
+function restart150(kVal){
+  // clear values from updated cubies array
+  updatedCubies = []
+	// variable for the number of turns parameter
+	let param;
+
+	switch(kVal){
+		case 1: // SINGLE ROTATION
+		 param = {k:1}
+
+		break;
+		case 2: // DOUBLE ROTATION
+			 param = {k:2}
+		break;
+	}
+
+	rot.k = 0;
+		rot.oldK = 0;
+		new TWEEN.Tween( rot )
+		.to( param, 150 )
+		.easing( TWEEN.Easing.Quartic.InOut )
+		.onUpdate(rotationsSelector[0])
+		.start()
+    
+    setTimeout(() => {
+      for(let i = 3; i<scene.children.length; i++){
+        // only get the cubies lying on the rotated axis
+        if(scene.children[i].center.y === 1){
+          updatedCubies.push(scene.children[i])
+    }
+  
+      }
+  
+      console.log(updatedCubies)
+    }, 10);
+
+}
+
+
+function restart800(kVal, velocity){
+
+}
+
+
+
+
+
+
+
+
+function restart1200(kVal){
+  // clear values from updated cubies array
+  updatedCubies = []
+	// variable for the number of turns parameter
+	let param;
+
+	switch(kVal){
+		case 1: // SINGLE ROTATION
+		 param = {k:1}
+
+		break;
+		case 2: // DOUBLE ROTATION
+			 param = {k:2}
+		break;
+	}
+
+	rot.k = 0;
+		rot.oldK = 0;
+		new TWEEN.Tween( rot )
+		.to( param, 1200 )
+		.easing( TWEEN.Easing.Quartic.InOut )
+		.onUpdate(rotationsSelector[0])
+		.start()
+    
+    setTimeout(() => {
+      for(let i = 3; i<scene.children.length; i++){
+        // only get the cubies lying on the rotated axis
+        if(scene.children[i].center.y === 1){
+          updatedCubies.push(scene.children[i])
+    }
+  
+      }
+  
+      console.log(updatedCubies)
+    }, 10);
+ 
+  }
+
+
+
+SWITCH FOR VARYING ROTATION SPEED
+
+
+    switch(speed){
+        case 1500: velocity = 1200
+          break;
+          case 800:
+            break;
+            case 300: velocity = 150
+              break;
+      }
+
+
+OLD SWITCH WITHOUT PRE AUTO SOLVE SPEED CONTROL
+
+// original preAutoScramble function in case of update issues
+
+// function preAutoScramble(array, speed){
+//   console.log(array)
+//  let algoTime = array.length*1510
+// array.forEach((rotation, i) =>{
+//  setTimeout(() => {
+//    faceRotate3D(array[i])
+//  }, i*1500);
+// })
+// }

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+         
+          <script type="importmap">
+            {
+              "imports": {
+                "three": "https://unpkg.com/three@0.156.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.156.0/examples/jsm/"
+              }
+            }
+          </script>
+
+          <!-- <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script> -->
+          <script src="p5.js"></script>
+          <script type="module" src="script_layout_2.js"></script>
+          <script type="module" src="random.js"></script>
+          <script type="module" src="video_capture.js"></script>
+  
+          <!-- <script type="module" src="sketch.js"></script> -->
+             <link rel="stylesheet" type="text/css" href="style.css">
+
+          
+            <title> Cube Solver II</title>
+        </head>
+        
+        <header>
+    
+         
+        </header>
+        <body>
+
+
+
+<!-- ALGORITHM MODAL-->
+<!-- <div class="algorithm-modal-container">
+<div class="algorithm-modal">
+  <p id="modal-para"></p>
+</div>
+</div> -->
+
+<!-- scrambled case input-->
+<!-- <div class="scramble-modal-container">
+  <label for="scramble-input">Paste Scramble</label>
+<input type="text" id="scramble-input">
+<button class="scramble-btn">Execute scramble</button>
+  </div> -->
+<div id="camera_and_cube">
+  <div class="canvas">
+
+  </div>
+  <div id="camera-div"></div>
+</div>
+
+
+<div class="app-container">
+
+        <!-- face rotation buttons DEFAULT-->
+        <div class="rotations-container">
+          <p class="rotations-para">ROTATIONS</p>
+          <div class="rotations-div">
+            <button id="u-btn" class="face-rotate-btn">U</button>
+            <button  id="d-btn"  class="face-rotate-btn">D</button>
+            <button  id="l-btn"  class="face-rotate-btn">L</button>
+            <button  id="r-btn"  class="face-rotate-btn">R</button>
+            <button  id="f-btn"  class="face-rotate-btn">F</button>
+            <button  id="b-btn"  class="face-rotate-btn">B</button>
+          </div>
+          
+          <div class="rotations-div">
+            <button id="u-prime-btn" class="face-rotate-prime-btn">U`</button>
+            <button  id="d-prime-btn"  class="face-rotate-prime-btn">D`</button>
+            <button  id="l-prime-btn"  class="face-rotate-prime-btn">L`</button>
+            <button  id="r-prime-btn"  class="face-rotate-prime-btn">R`</button>
+            <button  id="f-prime-btn"  class="face-rotate-prime-btn">F`</button>
+            <button  id="b-prime-btn"  class="face-rotate-prime-btn">B`</button>
+          </div>
+          
+          <div class="rotations-div">
+            <button id="u2-btn" class="face-double-rotate-btn">U2</button>
+            <button  id="d2-btn"  class="face-double-rotate-btn">D2</button>
+            <button  id="l2-btn"  class="face-double-rotate-btn">L2</button>
+            <button  id="r2-btn"  class="face-double-rotate-btn">R2</button>
+            <button  id="f2-btn"  class="face-double-rotate-btn">F2</button>
+            <button  id="b2-btn"  class="face-double-rotate-btn">B2</button>
+          </div>
+          
+          </div>
+          
+  <div class="main-container">
+
+  
+    <!-- FACE -->
+  <div class="face-div">
+    <p class="face-name">UP</p>
+    <div id="up-face" class="face-element"></div>
+  </div>
+
+
+    <!-- FACE -->
+  <div class="face-div">
+    <p class="face-name">LEFT</p>
+    <div id="left-face" class="face-element"></div>
+  </div>
+
+      <!-- FACE -->
+  <div class="face-div">
+    <p class="config">FRONT</p>
+    <div id="front-face" class="face-element"></div> 
+  </div>
+
+      <!-- FACE -->
+  <div class="face-div">
+    <p class="face-name">RIGHT</p>
+    <div id="right-face" class="face-element"></div>
+  </div>
+
+
+
+
+
+      <!-- DOWN FACE -->
+
+      <div class="face-div">
+        <p class="face-name">DOWN</p>
+        <div id="down-face" class="face-element"></div>  
+      </div>
+
+
+      <div class="face-div">
+        <p class="face-name">BACK</p>
+        <div id="back-face" class="face-element"></div>
+      </div>
+
+
+
+
+
+      
+                              <!-- CUBE STATE BUTTONS -->
+  <div id="pre-solve" class="config-container">
+    <p class="config">CONFIG</p>
+    <div class="config-div">
+      <button id="manual-config" class="manual-config">Manual Config</button>
+      <button id="solve" class="cube-state-btn">solve</button>   
+      <button id="reset" class="cube-state-btn">reset</button>
+      <button id="cancel-config" class="cube-state-btn">cancel config</button>
+    </div>
+  </div>
+
+  <div id="post-solve" class="config-container">
+    <p class="config">SOLVE SPEED</p>
+    <div class="config-div">
+      <button id="fast" class="solve-speed-btn">FAST</button>
+      <button id="medium" class="solve-speed-btn">MEDIUM</button>   
+      <button id="slow" class="solve-speed-btn">SLOW</button>
+    </div>
+  </div>
+
+      <!-- BACK FACE -->
+
+
+      <div id="config-type" class="config-container">
+        <p class="config">CONFIG</p>
+        <div class="config-div">
+          <button id="use-camera" class="manual-config cube-state-btn">use camera</button>
+          <button id="scan-face" class="cube-state-btn">scan face</button>
+          <button id="use-picker" class="cube-state-btn">use picker</button>   
+
+        </div>
+      </div>
+
+    <!-- CUBE STATE INFO -->
+    <div id="manual-scrambles" class="config-container">
+      <p class="config">SCRAMBLES</p>
+      <div class="config-div">
+        <button id="six_a" class="test-scrambles six-moves">6a</button>
+        <button id="six_b" class="test-scrambles six-moves">6b</button>
+        <button id="six_c" class="test-scrambles six-moves">6c</button>
+        <button id="ten_a" class="test-scrambles ten-moves">10a</button>
+        <button id="ten_b" class="test-scrambles ten-moves">10b</button>
+        <button id="ten_c" class="test-scrambles ten-moves">10c</button>
+        <button id="fftn_a" class="test-scrambles fifteen-moves">15a</button>
+        <button id="fftn_b" class="test-scrambles fifteen-moves">15b</button>
+        <button id="fftn_c" class="test-scrambles fifteen-moves">15c</button>
+      </div>
+    </div>
+
+
+              <!-- ALGORITHM MODAL-->
+<div class="color-palette-container">   
+<p class="config">FACET PICKER</p>
+<div class="color-modal">
+<div id="red-col" class="color-div"></div>
+<div id="orange-col" class="color-div"></div>
+<div id="green-col" class="color-div"></div>
+<div id="blue-col" class="color-div"></div>
+<div id="white-col" class="color-div"></div>
+<div id="yellow-col" class="color-div"></div>
+</div>
+</div>
+
+    
+
+
+
+
+                            <!-- F2L REFLECTION BUTTONS -->
+                            <div class="config-container-b">
+                              <p class="config">F2L reflections</p>
+                              <div class="config-div">
+                            
+                                <p class="moves-para" id="moves-para">0</p>
+                              </div>
+                            </div>
+
+
+     <!-- END OF MAIN CONTAINER-->
+</div>
+
+
+
+
+
+</div>
+                          <!-- MAIN  CONTAINER-->
+
+                          <!-- <div class="p5-container">
+                            <div id="camera-canvas"></div>
+                            
+                          </div> -->
+
+
+
+
+
+
+
+<!-- 
+NEW LAYOUT
+
+<script src="script_layout_2.js"></script>
+
+OLD LAYOUT 
+<script src="script.js"></script>
+
+
+
+-->
+        </body>
+      <footer>
+       
+                             
+      </footer>             
+    </html>
+
+
+    <!--
+
+
+        <div id="upper-piles-container"></div>
+
+    -->

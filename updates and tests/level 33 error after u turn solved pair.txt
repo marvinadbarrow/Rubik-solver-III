@@ -1,0 +1,14 @@
+6a scramble - pair solved, rotated U, on level 33, 
+corner was b, w, r
+pperpendicular to face 2. I.e corner is on 1 and edge is on 2
+solved edge yes (identity solve)
+
+but on U  turn, 
+corner is r b w
+parallel is compared to wrong edge, right, should be front;
+edge orientation is correct [b,r]
+axis of white is correct, but because red is up this gives an anti identity F2L which has no solved edge. 
+edge index 3
+corner index 3
+
+Investigate 6A

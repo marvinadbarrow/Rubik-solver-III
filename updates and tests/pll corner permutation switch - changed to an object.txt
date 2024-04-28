@@ -1,0 +1,21 @@
+
+// switch(stringPermutation){
+//     case '0132':
+//      algoArray = [adjustmentMove, UP, ...backCornerSwapAlgoPLL, U]
+//     break;
+//     case '0213':
+//       algoArray = [adjustmentMove, ...frontCornerSwapAlgoPLL]
+//     break;
+//     case '0231':
+//       algoArray = [adjustmentMove, ...backCornerSwapAlgoPLL, UP] 
+//     break;
+//     case '0312':
+//       algoArray = [adjustmentMove, U, ...backCornerSwapAlgoPLL]
+//     break;
+//     case '0321':
+//       algoArray = [...doubleCornerSwapAlgoPLL, U2]
+//     break;
+//     case '0123': 
+//     algoArray = [adjustmentMove, 'N/A']
+//       break;
+// }

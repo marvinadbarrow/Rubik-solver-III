@@ -1,0 +1,32 @@
+layer: 
+down - 
+corners = 4
+edges  = 6
+
+mid - 
+edges  = 3
+
+up -
+corners  = 9
+edges  = 9
+
+DownlayerCorners: 
+1) creation of 3D cubies and material attribution
+2) search for F2L corners, 2nd F2L onward - only 2 lines of code
+3) search for F2L corners, 1st search
+4) confirm F2L check - if each first layer  f2l corner is paired to its edge on mid layer
+
+
+
+if(greenTopRowString == 'ggg'){ console.log('green face solved')
+solvedFaceParams = [UP, U, 1, '1']
+}else if(orangeTopRowString == 'ooo'){ console.log('orange face solved')
+  solvedFaceParams = ['N/A', 'N/A', 0, '2']
+}else if(blueTopRowString == 'bbb'){   console.log('blue face solved')
+  solvedFaceParams = [U, UP, 3, '3']
+}else if(redTopRowString == 'rrr'){   console.log('red face solved')
+  solvedFaceParams = [U2, U2, 2, '0']
+}
+
+
+

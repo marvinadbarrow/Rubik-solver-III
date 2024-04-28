@@ -1,0 +1,175 @@
+    case 4: // four cross pieces are correctly oriented
+    // clear permutations array for new down layer confuguration
+
+    // generate a permutation for the 4 pieces
+   let getPermutation =  edgePermutationGetter(downLayerEdges)
+   console.log('permutation')
+   console.log(getPermutation)
+
+
+   
+  //   permutationsArray = []
+  //   console.log('four oriented cross pieces on the down layer')
+  //   orientedCrossEdgeArray.forEach(edgePiece =>{
+  // // variable for color facet in order to determine the natural index of the piece
+  //     let colorFacet;
+  //     // variable for the index at which the piece naturally sits in the down layer
+  // let naturalIndex; 
+  //       colorFacet = edgePiece['cross_piece'][1]
+  //       if(colorFacet == 'o'){
+  //         naturalIndex = 2
+  //       }else if(colorFacet == 'g'){
+  //         naturalIndex = 1
+  //       }else if(colorFacet == 'r'){
+  //         naturalIndex = 0
+  //       }else{ // color facet is 'b'
+  //         naturalIndex = 3
+  //       }
+  //       permutationsArray.push(
+  //         {
+  //           'current_index':edgePiece['index_in_layer'],
+  //           'natural_index': naturalIndex,
+  //           'oriented': true
+  //       }
+  //       )
+      
+  //   })
+  
+  // console.log('this is the permutation')
+  // console.log(permutationsArray.join('').toString())
+    // execute permute function for four oriented cross pieces
+    permuteFourCrossEdges(getPermutation)
+      break;
+
+
+
+
+
+function permuteFourCrossEdges(array){
+
+  let rotationMove; 
+  incorrectlyOrientedPieceArray = [] // clear any elements in the array holding indexes of incorrectly oriented cross pieces, for the scenario where all cross pieces are on the down layer. 
+  // the array 
+ 
+ // this array holds the permutation of the cross pieces as a combination, i.e. the index positions at which they sit, relative to the zero index position
+let unsolvedPermutationArray = []
+
+
+let stringPermutation;
+ // loop through the array, and given that it each element is an object detailing the edge piece at each of the four indexes referencing the side faces of the cube, irrespective of orientation, find the object that has a 'natural' index of 'zero'.  Check how far it is from the natural index and use that information to rotate the down layer to so that the zero-index piece (which is the red piece) sits at the permuted position.  From there, the collective permutation positions of all pieces can be used to fix pieces incorrectly permuted. 
+
+ // this variable is used to rotate the cube so that the cross piece that naturally sits at the zero index (the cross piece that sits on the red face when permuted) is placed at the its natural position, i.e. zero index.  the integer value assinged this variable will be used to rotate the down layer, and also to rewrite the post rotation index positions of the other cross pieces
+let rotationsTocalibration
+
+
+ array.forEach(crossObject =>{
+
+  // get the natral index of the cross object
+ let naturalIndex = crossObject['natural_index']
+ // get the current index of the cross object
+ let currentindex = crossObject['current_index']
+
+ // if the piece is not correctly oriented, push its index to the array created to hold a single incorrectly oriented piece when all cross pieces are on the down layer -  the array can be checked after all pieces have been permuted. 
+if(crossObject['oriented'] === false){
+incorrectlyOrientedPieceArray.push(crossObject['natural_index'] )  
+
+}
+
+
+  if(naturalIndex === 0){ // if the natural index of the cross object  under examination is zero
+
+    if(currentindex > 0){// if the current index is not zero; the piece with a natural index of zero is not sitting at index zero
+      // the down layer needs to rotate to the calibration so the piece that naturally sits at zero, is actually sitting at position zero.  From there the permutation of the other pieces can be compared to the permutation cases which dictate how the cube is manipulated to rearrange the cross pieces so they all sit at their natural indexes. 
+
+      // get the difference between the natural index of the piece and the index of the position it is currently sitting at - this gives how much the down layer needs to rotate to reach calibration
+      let rawRotation = naturalIndex - currentindex
+      console.log('raw rotation')
+      console.log(rawRotation)
+
+      // checking values
+      console.log('currentindex')
+      console.log(currentindex)
+
+      console.log('naturalIndex')
+      console.log(naturalIndex)
+
+      
+      // if the rawRotation value is negative, the piece is in front (by clockwise rotation) of its natural index position.  Adding 4 to the negative value will give the number of forward rotations needed for the piece to reach its natural index
+      rawRotation < 0? rotationsTocalibration = rawRotation + 4:  rotationsTocalibration = rawRotation
+      
+    }else{ // current index of the piece which naturally sits at zero must be zero,  so the down layer is already at calibration and does not need to rotate
+rotationsTocalibration = 0
+    }
+
+  }
+ })
+
+ console.log('rotationsTocalibration')
+ console.log(rotationsTocalibration)
+// now (if rotations are required) apply the rotations to the current position values of the objects referencing the cross pieces
+if(rotationsTocalibration > 0){
+  console.log('rotationsTocalibration')
+  console.log(rotationsTocalibration)
+
+  // rotate the down layer so that the cross piece with natural index of zero is sitting at its natual index
+
+  switch(rotationsTocalibration){
+    case 1: rotationMove = [D]
+    console.log('D rotation required first')
+      break;
+      case 2:  rotationMove = [D2]
+      console.log('D2 rotation required first')
+        break;
+        case 3:  rotationMove = [DP]
+        console.log('D PRIME rotation required first')
+          break
+  }
+  array.forEach(object =>{
+    // update the index of the current object to reflect the cross piece position after down layer is rotated to calibration
+object['current_index'] = (object['current_index'] + rotationsTocalibration)%4
+
+let permutationPosition = object['current_index']
+unsolvedPermutationArray[permutationPosition] = object['natural_index']
+  })
+
+  console.log('unsolvedPermutationArray')
+  console.log(unsolvedPermutationArray)
+  //create a string out of the joined elements of the unsolved permutation array; other than the identity permutation '0123' which occurs when all cross pieces are positioned at their natural index, there are 5 permutations that can occur.  The below swwitch statement examins the permutation and evokes the function that will rearrange the pieces to have the identity permutation. 
+  stringPermutation = unsolvedPermutationArray.join('').toString()
+  console.log('stringgified permutation, after adjustment to calibration, but prior to sending for permutation algorithm -  ROTATION REQUIRED FIRST')
+  console.log(stringPermutation)
+  
+// EXECUTE ALGORITHM, WAIT FOR ITS COMPLETION, THEN EXECUTE PERMUTATION
+// algorithmExecution(rotationMove)
+setTimeout(() => {
+    // execute function which solves permutation
+    console.log('sending to permute function for algorithm, post setup move')
+    // fullCrossPermutations(stringPermutation)
+}, rotationDelay*2);
+
+
+}else{
+  // the down layer is already in the calibration position, but this doesn't mean that the cross is correctly permuted, just that the zero piece is in the correct position: other pieces that are incorrectly permuted will need fixing. 
+  console.log('no rotations required')
+  // on each object in the array
+  array.forEach(object =>{
+// note the cross object's current index
+    let permutationPosition = object['current_index']
+// place the natural index value of the object at the index position (in the array) corresponding to the cube's side-face index where the piece currently sits
+    unsolvedPermutationArray[permutationPosition] = object['natural_index']
+  })
+// create the string permutation which represents how the cross pieces are arranged on the down layer
+  stringPermutation = unsolvedPermutationArray.join('').toString()
+  // show the permutation
+  console.log('stringPermutation')
+  console.log(stringPermutation)
+    // execute function which checks the permutation and solves it, if required. 
+  fullCrossPermutations(stringPermutation)
+}
+console.log(array)
+
+
+
+
+
+}
