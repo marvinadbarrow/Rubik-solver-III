@@ -11,7 +11,7 @@ let scannArray = []
 // import function which is used to send back face data to the main js file
 import { cameraColours } from "./script_layout_2.js";
 
-
+// temp faces array holds the colors of the nine facets of the current face scanned by the camera. The function is exported to the main js script and, after the matrix has been updated with the new face details, reset faces is executed, the temp facets array is emptied and the draw function will execute the find color function on the condition that the array is empty, AND, because the scannArray has a value in it.  Once new face details are recorded (when nine facet colors have been pushed to the facets array) this will stop the color recognition function from being executed. 
 function resetFacets(){
     scannArray.push('scanning')
     tempFaceFacets = [[], [], []]

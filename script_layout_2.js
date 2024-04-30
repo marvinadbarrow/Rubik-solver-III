@@ -905,7 +905,8 @@ let layerCubies = []
 let faceColour;
 let colourName;
 
-
+// the below array records the number of faces recorded by the camera, and if the number if greater than 5 when the 'solve' button is pressed, if there are not black facets on the 2D cube, then the current configuration of the cube matrix can be processed for solving; Given that the matrix is already changed when the solve button is clicked (unlike for color pick use to change facet colours, where the matrix is only changed after the the last black facet has been coloured ), then the solve can be executed using the current matrix configuration. 
+let facesVisualized = [0]
 
 // =============================== START OF FUNCTION ==========================================//
 
@@ -915,6 +916,7 @@ import { resetFacets } from './video_capture.js';
 function prepareNewFace(matrixCopy, array, index){
   console.log('array and index for changing cube')
 matrixCopy[index] = [...array]
+facesVisualized[0]++; // increment the value in facesVisualized
 renderCube(matrixCopy, 'update')
 }
 
@@ -935,6 +937,7 @@ export function cameraColours(array){
       'r': () =>{prepareNewFace(newMatrix, array, 5)},
       'w': () =>{prepareNewFace(newMatrix, array, 4)},
        }
+
 // execute prepare face array with the clone matrix and the face details
 newFacetObject[array[1][1]]()
   }
@@ -1777,9 +1780,10 @@ cubieCoordinates = []
       // to prevent the black cube (or any faces with black facets) being saved, check the cube's facets, and if any black facet exists,
       let blackFacets = 0;
 
-  if(localStorage.getItem('cube_scramble_00')){
+  if(facesVisualized.length > 5){
     // 
-    configuredCube = JSON.parse(localStorage.getItem('cube_scramble_00'))
+    configuredCube = cubeMatrixAlt
+    solveManualConfiguration('solve')
     // console.log(configuredCube)
   }else{ // if test scramble doesn't exist, then the cube needs manual configuration again
 
@@ -1896,9 +1900,8 @@ if(blackFacets > 0){
 
 function solveManualConfiguration(){
   if(downLayerEdges.length > 0){
-    movesPara.textContent = 0;
 
-    // clear current cube
+    // clear current 3D cube
     clearForManualConfig()
     // render manual scramble
     setTimeout(() => {
@@ -1906,7 +1909,7 @@ function solveManualConfiguration(){
     }, 20);
   
     setTimeout(() => {
-      // namual config array needs to be set in order for solve to run
+      // MANUAL config array needs to be set in order for solve to run
       manualConfigArray = []
       changeCubeState('solve')
     }, 100);
@@ -1947,7 +1950,6 @@ rotationDelay = 35
     }else{
       // reset the number of moves in the output so you can see the number of moves it takes to solve 
       if(downLayerEdges.length > 0){
-        movesPara.textContent = 0;
         // clear solution array so scramble algorithm is removed and purely solve algorithms are recorded
         solutionArray = []
         solveInProgress.push('solve in progress')
