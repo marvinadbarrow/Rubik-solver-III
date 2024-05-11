@@ -640,8 +640,11 @@ colorModal.style.display = 'none'
 // button appears when in manual config mode; it replaces the button used to activate manual config
 let cancelConfigBtn = document.getElementById('cancel-config')
 cancelConfigBtn.style.display = 'none'
-
+ 
 let scrambleConfigBtn = document.getElementById('scramble')
+
+let cubeOrientationBtn = document.getElementById('orient-face')
+cubeOrientationBtn.style.display = 'none'
 let crossPiecePosition; 
 let facetIndexes
 
@@ -920,7 +923,7 @@ facesVisualized[0]++; // increment the value in facesVisualized
 renderCube(matrixCopy, 'update')
 }
 
-
+export let acquireOrientation = '';
 
 export function cameraColours(array){
 
@@ -939,7 +942,13 @@ export function cameraColours(array){
        }
 
 // execute prepare face array with the clone matrix and the face details
-newFacetObject[array[1][1]]()
+if(array[1][1]){
+  newFacetObject[array[1][1]]()
+}else{
+  alert('no color information available; web cam may not be active')
+  return
+}
+
   }
 }
 
@@ -1413,7 +1422,7 @@ function manualConfigOnOff(){
   if(!manualConfigArray.includes('configuring')){
     // change color of manual config and solve config buttons
         manualConfigBtn.style.backgroundColor = 'rgb(188, 84, 230)'
-    
+        document.getElementById('use-camera').style.display = 'block';
         // if this value is in the manual config array then manual configuration is 'on'
         manualConfigArray.push('configuring')
     let manualConfigCube = clone(cubeMatrixAlt)
@@ -1567,7 +1576,7 @@ let bCCWb = [[0, 0, 1, 0], [4, 2, 3, 2]]
 // U or U' move
 function upRotate(button, double){
   let preRotateCube = clone(cubeMatrixAlt)
-button == 'u-prime-btn'?rotCCW(): rotCW()// if button id is 'prime' rotate CCW otherwise CW
+button == 'u-prime-btn'? rotCCW(): rotCW()// if button id is 'prime' rotate CCW otherwise CW
 
   function rotCCW(){
     aboutYFaces.forEach((x, i) =>{preRotateCube[x][0] = cubeMatrixAlt[aboutYFaces[(i+3)%4]][0]})
@@ -1976,6 +1985,7 @@ resetAllCubes()
     break;
     case 'cancel-config':
       if(downLayerEdges.length > 0 ){
+
 resetAllCubes()
         // hide cancel config button and buttons for selecting configuration type
         manualConfigOnOff()
@@ -1989,10 +1999,19 @@ resetAllCubes()
       document.getElementById('use-camera').style.display = 'none';
       break;
       case 'use-camera': 
-      scanFaceBtn.style.display = 'block'
       usePickerBtn.style.display = 'none'
       document.getElementById('use-camera').style.display = 'none';
+      cubeOrientationBtn.style.display = 'block';
       break;
+      case 'orient-face':
+       
+        // scanFaceBtn.style.display = 'block'
+        alert('initiating copy process of faces 1 and 2')
+        acquireOrientation = 'aquiring orientation'
+        setTimeout(() => {
+          resetFacets()
+        }, 1000);
+        break;
       case 'scan-face':
         console.log('resetting facets')
         resetFacets()

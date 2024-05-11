@@ -8,13 +8,23 @@ let redValuesArr = []
 let greenValuesArr = []
 let blueValuesArr = []
 let scannArray = []
+let centerPieceArray = []
+let orientationString;
 // import function which is used to send back face data to the main js file
-import { cameraColours } from "./script_layout_2.js";
+import { cameraColours, acquireOrientation } from "./script_layout_2.js";
 
 // temp faces array holds the colors of the nine facets of the current face scanned by the camera. The function is exported to the main js script and, after the matrix has been updated with the new face details, reset faces is executed, the temp facets array is emptied and the draw function will execute the find color function on the condition that the array is empty, AND, because the scannArray has a value in it.  Once new face details are recorded (when nine facet colors have been pushed to the facets array) this will stop the color recognition function from being executed. 
 function resetFacets(){
     scannArray.push('scanning')
     tempFaceFacets = [[], [], []]
+}
+
+let orientationObject = {
+'oy': () =>{console.log('x rotation')},
+'oy': () =>{console.log('x, y rotation')}, 
+'oy': () =>{console.log('x, y2 rotation')}, 
+'oy': () =>{console.log('x, y-prime rotation')}, 
+
 }
 
 // export a function which allows the main js module to change clear the tempFacet array
@@ -405,9 +415,60 @@ pushColor(yStart, colorAbbr)
 
 }
 
-cameraColours(tempFaceFacets)
-// console.log(tempFaceFacets)
-// maybe, create a function in script layout 2 and import it here, and perhaps send a tempFaceFacets array as a variable to the function so that it gets executed on the other script; or find out how that works. 
+
+if(acquireOrientation  == ''){
+    cameraColours(tempFaceFacets)
+
+    // maybe, create a function in script layout 2 and import it here, and perhaps send a tempFaceFacets array as a variable to the function so that it gets executed on the other script; or find out how that works. 
+}else{
+    console.log('aquire value')
+    console.log(acquireOrientation)
+
+
+    if(centerPieceArray.length < 3){  // only allow a maximum of 2 elements in center pieces array
+        console.log('faces center facet color')
+        console.log(tempFaceFacets)
+        console.log(tempFaceFacets[1][1])
+centerPieceArray.push(tempFaceFacets[1][1])
+if(centerPieceArray.length < 2){
+    console.log(centerPieceArray)
+    alert('first center recorded; rotate cube to record next face')
+    resetFacets() // reset facets clears the array recording the facets of a face, which enables the new face to have its facets recorded.  At present, this is necessary so that the two center pieces can be registered one after the other, which will then be used to determine the rotations required to get the cube into the correct orientation for solving.  On the physical mechanism, the alert can still be kept (for the moment), but resetFacets() can be preceded by executeXTurn(), which will cause a -90 rotation around X;  after the rotation is complete, resetFacets() can execute and the second face will be scanned, the center piece facet color pushed to centerpiece array; and this will cause the 'else' part of this condition to be true causing a string to be created to represent the two center piece colours. The string will then be used to execute the appropriate rotations to get the cube to be positioned correctly for solving
+
+    // executeXTurn()
+}else{
+orientationString = centerPieceArray.join('').toString()
+console.log('orientationString')
+console.log(orientationString)
+
+// the string represents a key in the orientationObject; the key value is a function which will execute when object[string]() is called; as long as the string is a key of the object; set a condition to avoid calls using invalid keys: 
+if(orientationObject[orientationString]){
+    orientationObject[orientationString]()
+}else{
+    alert('invalid centerpiece pairing; rescan center pieces')
+}
+
+}
+    }
+
+    // here is for checking the center facet
+  
+    /*
+    WHAT NEEDS TO HAPPEN NEXT: - 
+    1. the first face needs to be scanned and center color recorded
+    2. the face needs to be physically rotated
+    3. the second face needs to be scanned and center piece recorded
+
+    The center piece array can be joined, creating a two-character string
+    the string value is used to determine the rotation needed to get the cube facing the right way and having the correct orientation for solving
+    
+    4. creat a string character of the two colors (by joining the elements of the center piece array)
+    5. use string to call function for the associated rotations from the orientation object
+    
+    
+    */
+}
+
     }
 
     
