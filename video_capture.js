@@ -20,11 +20,36 @@ function resetFacets(){
 }
 
 let orientationObject = {
+// orange center
 'oy': () =>{console.log('x rotation')},
-'oy': () =>{console.log('x, y rotation')}, 
-'oy': () =>{console.log('x, y2 rotation')}, 
-'oy': () =>{console.log('x, y-prime rotation')}, 
-
+'ow': () =>{console.log('y2/x rotation')}, 
+'ob': () =>{console.log('y/x rotation')}, 
+'og': () =>{console.log('y-prime/x rotation')}, 
+// red center
+'ry': () =>{console.log('x/y2 rotation')},
+'rw': () =>{console.log('x-prime rotation')}, 
+'rb': () =>{console.log('y, x-prime rotation')}, 
+'rg': () =>{console.log('y-prime/x-prime rotation')}, 
+// green center
+'gy': () =>{console.log('x/y-prime rotation')},
+'gw': () =>{console.log('x-prime/y rotation')}, 
+'gr': () =>{console.log('x,/y-prime/x rotation')}, 
+'go': () =>{console.log('y-prime/x rotation')}, 
+// blue center
+'by': () =>{console.log('x/y rotation')},
+'bw': () =>{console.log('y/x/y rotation')}, 
+'br': () =>{console.log('x,/y/x rotation')}, 
+'bo': () =>{console.log('x-prime/y-prime/x rotation')}, 
+// white center
+'wg': () =>{console.log('y-prime rotation')},
+'wo': () =>{console.log('no rotation required')}, 
+'wb': () =>{console.log('y rotation')}, 
+'wr': () =>{console.log('y2 rotation')}, 
+// yellow center
+'yg': () =>{console.log('x2/y rotation')},
+'yo': () =>{console.log('x2/y rotation')}, 
+'yb': () =>{console.log('x2/y-prime rotation')}, 
+'yr': () =>{console.log('x2 rotation')}, 
 }
 
 // export a function which allows the main js module to change clear the tempFacet array
